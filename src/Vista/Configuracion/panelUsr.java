@@ -46,6 +46,7 @@ public class panelUsr extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsr = new javax.swing.JTable();
         btnVent_Agg = new javax.swing.JButton();
@@ -63,6 +64,10 @@ public class panelUsr extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         txtCPass = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtTipo = new javax.swing.JTextField();
+
+        jLabel9.setText("jLabel9");
 
         tblUsr.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,6 +127,9 @@ public class panelUsr extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(51, 51, 255));
         jLabel8.setText("USUARIOS");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Tipo:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,12 +160,17 @@ public class panelUsr extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addComponent(txtUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10)
+                        .addGap(81, 81, 81)
+                        .addComponent(txtTipo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -194,7 +207,11 @@ public class panelUsr extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtCPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVent_Agg)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -217,7 +234,7 @@ public class panelUsr extends javax.swing.JPanel {
                 usr.setApellido(txtApdo.getText());
                 usr.setTel(txtTel.getText());
                 usr.setContra(sifraPass);
-                usr.setId(1);
+                usr.setTipo(1);
                 
                 if(sqlU.registrar(usr)){
                     this.actualizar();
@@ -267,6 +284,7 @@ public class panelUsr extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnVent_Agg;
     javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel4;
@@ -274,13 +292,15 @@ public class panelUsr extends javax.swing.JPanel {
     javax.swing.JLabel jLabel6;
     javax.swing.JLabel jLabel7;
     javax.swing.JLabel jLabel8;
+    javax.swing.JLabel jLabel9;
     javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblUsr;
-    javax.swing.JTextField txtApdo;
-    javax.swing.JPasswordField txtCPass;
-    javax.swing.JTextField txtNom;
-    javax.swing.JPasswordField txtPass;
-    javax.swing.JTextField txtTel;
-    javax.swing.JTextField txtUsr;
+    public javax.swing.JTextField txtApdo;
+    public javax.swing.JPasswordField txtCPass;
+    public javax.swing.JTextField txtNom;
+    public javax.swing.JPasswordField txtPass;
+    public javax.swing.JTextField txtTel;
+    public javax.swing.JTextField txtTipo;
+    public javax.swing.JTextField txtUsr;
     // End of variables declaration//GEN-END:variables
 }
