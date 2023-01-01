@@ -23,7 +23,5 @@ public class conexion {
         return cn;
     }
         
-        public static void main(String[] args) {
-            
-    }
+
 }

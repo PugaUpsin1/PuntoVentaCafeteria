@@ -40,6 +40,7 @@ Proveedor varchar (50) not null
 
 
 create table if not exists receta_prod(
+id_ingrd int auto_increment primary key  not null,
 ingrediente varchar (50) not null,
 cantidad double not null,
 unidad varchar (50) not null,
@@ -55,6 +56,6 @@ foreign key (idInventario)
 references inventario(idInventario)
 );
 
-
+-- insert into receta_prod(ingrediente,cantidad,unidad,)
 
 drop table usuarios;

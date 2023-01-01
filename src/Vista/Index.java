@@ -36,7 +36,7 @@ public class Index extends javax.swing.JFrame {
         cont.setBackground(new Color(173,216,230));
         
         panelVentas p1 = new panelVentas();
-        p1.setSize(1288,569);
+        p1.setSize(1288,570);
         p1.setLocation(0,0);
         pIndex.removeAll();
         pIndex.add(p1, BorderLayout.CENTER);
@@ -80,7 +80,7 @@ public class Index extends javax.swing.JFrame {
         );
         pIndexLayout.setVerticalGroup(
             pIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 572, Short.MAX_VALUE)
         );
 
         btnVentas.setText("Ventas");
@@ -135,7 +135,6 @@ public class Index extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, 1288, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -156,6 +155,7 @@ public class Index extends javax.swing.JFrame {
                     .addComponent(lblUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCerrarSesion))
                 .addContainerGap())
+            .addComponent(pIndex, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1288, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +179,8 @@ public class Index extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCerrarSesion)
                         .addGap(24, 24, 24)))
-                .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,7 +188,7 @@ public class Index extends javax.swing.JFrame {
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         panelVentas p1 = new panelVentas();
-        p1.setSize(1288,569);
+        p1.setSize(1288,570);
         p1.setLocation(0,0);
         pIndex.removeAll();
         pIndex.add(p1, BorderLayout.CENTER);
@@ -212,7 +213,7 @@ public class Index extends javax.swing.JFrame {
 
     private void btnProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdActionPerformed
         panelProductos pnlProd = new panelProductos();
-        pnlProd.setSize(1288,569);
+        pnlProd.setSize(1288,570);
         pnlProd.setLocation(0,0);
         pIndex.removeAll();
         pIndex.add(pnlProd, BorderLayout.CENTER);
