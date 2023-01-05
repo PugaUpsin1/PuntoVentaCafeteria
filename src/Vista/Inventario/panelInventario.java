@@ -4,6 +4,7 @@
  */
 package Vista.Inventario;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 /**
@@ -29,19 +30,68 @@ public class panelInventario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnLstInv = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        pnl_Inv = new javax.swing.JPanel();
+
+        btnLstInv.setText("Inventario");
+        btnLstInv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLstInvActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Agregar");
+
+        javax.swing.GroupLayout pnl_InvLayout = new javax.swing.GroupLayout(pnl_Inv);
+        pnl_Inv.setLayout(pnl_InvLayout);
+        pnl_InvLayout.setHorizontalGroup(
+            pnl_InvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnl_InvLayout.setVerticalGroup(
+            pnl_InvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 535, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLstInv)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(1121, Short.MAX_VALUE))
+            .addComponent(pnl_Inv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLstInv)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_Inv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLstInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLstInvActionPerformed
+        listInventario LI = new listInventario();
+        LI.setSize(1286, 535);
+        LI.setLocation(0, 0);
+        pnl_Inv.removeAll();
+        pnl_Inv.add(LI, BorderLayout.CENTER);
+        pnl_Inv.revalidate();
+        pnl_Inv.repaint();
+    }//GEN-LAST:event_btnLstInvActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JButton btnLstInv;
+    javax.swing.JButton jButton2;
+    javax.swing.JPanel pnl_Inv;
     // End of variables declaration//GEN-END:variables
 }

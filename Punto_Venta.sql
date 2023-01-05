@@ -26,7 +26,8 @@ create table if not exists productos(
 idProducto int auto_increment primary key not null,
 nombre varchar (50) not null,
 tamaño double not null,
-unidad varchar (50) not null
+unidad varchar (50) not null,
+precioVent double not null
 );
 create table if not exists inventario(
 idInventario int auto_increment primary key not null,
@@ -58,4 +59,4 @@ references inventario(idInventario)
 
 -- insert into receta_prod(ingrediente,cantidad,unidad,)
 
-drop table usuarios;
+drop table productos;

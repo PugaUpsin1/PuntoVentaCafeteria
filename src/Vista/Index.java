@@ -4,6 +4,7 @@ package Vista;
 import Vista.Venta.panelVentas;
 import Modelo.Usuarios;
 import Vista.Configuracion.Configuracion;
+import Vista.Inventario.panelInventario;
 import Vista.Producto.panelProductos;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -80,7 +81,7 @@ public class Index extends javax.swing.JFrame {
         );
         pIndexLayout.setVerticalGroup(
             pIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
+            .addGap(0, 568, Short.MAX_VALUE)
         );
 
         btnVentas.setText("Ventas");
@@ -179,8 +180,8 @@ public class Index extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCerrarSesion)
                         .addGap(24, 24, 24)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)
+                .addComponent(pIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -197,7 +198,13 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnInventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventActionPerformed
-        // TODO add your handling code here:
+        panelInventario pI = new panelInventario();
+        pI.setSize(1288,570);
+        pI.setLocation(0,0);
+        pIndex.removeAll();
+        pIndex.add(pI, BorderLayout.CENTER);
+        pIndex.revalidate();
+        pIndex.repaint();
     }//GEN-LAST:event_btnInventActionPerformed
 
     private void btnConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfActionPerformed

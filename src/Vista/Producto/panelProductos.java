@@ -3,6 +3,7 @@ package Vista.Producto;
 
 import static Vista.Producto.listProduct.pnlLPr;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 
 public class panelProductos extends javax.swing.JPanel {
@@ -10,7 +11,7 @@ public class panelProductos extends javax.swing.JPanel {
 
     public panelProductos() {
         initComponents();
-        
+        this.setBackground(Color.WHITE);
         pnlLPr = new listProduct();
         pnlLPr.setSize(1286, 535);
         pnlLPr.setLocation(0, 0);
