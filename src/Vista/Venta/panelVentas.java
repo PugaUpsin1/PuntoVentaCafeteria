@@ -1,21 +1,100 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Vista.Venta;
 
+import Controlador.Categoria;
+import Controlador.Clientes;
+import Controlador.MedodoPago;
+import Controlador.Productos;
+import Controlador.VentEstado;
+import Controlador.Ventas;
+import Controlador.Ventas;
+import Modelo.sqlProductos;
+import Modelo.sqlVentas;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class panelVentas extends javax.swing.JPanel {
-
+    JTable Tvent;
+    ResultSet rs;
+    int totalV;
+    public double tota;
+    public String ref;
+    public int idVE;
+    public int idMeP;
+    public int idCli;
+    public int idVenta;
     // [1280, 569]
     public panelVentas() {
         initComponents();
         this.setBackground(Color.white);
         this.setSize(1288,469);
+        
+        llenarCatego();
+        llenarMetodo();
+        llenarVentPend();
+        llenarClientes();
+        tblDef();
+        
+        
+//        DateFormat dateForm = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
+
+//    String date = ZonedDateTime.now(ZoneId.of("America/Mexico"))
+//                .format(DateTimeFormatter.ofPattern("MM-dd-yyy, hh:mm:ss a"));
+         
     }
 
+    private void llenarCatego(){
+        sqlProductos sqlPro = new sqlProductos();
+        ArrayList<Categoria> listCat = sqlPro.getCategoria();
+        cbxCatP.removeAllItems();
+
+        for(int i = 0;i < listCat.size();i++){
+            cbxCatP.addItem(new Categoria(listCat.get(i).getIdCat(), listCat.get(i).getCategoria()));
+        }
+    }
+    private void llenarMetodo(){
+        sqlVentas sqlven = new sqlVentas();
+        ArrayList<MedodoPago> listMP = sqlven.getMetodoPago();
+        cbxMetodo.removeAllItems();
+
+        for(int i = 0;i < listMP.size();i++){
+            cbxMetodo.addItem(new MedodoPago(listMP.get(i).getIdMP(), listMP.get(i).getMetodo()));
+        }
+    }  
+    public void llenarVentPend(){
+        sqlVentas sqlven = new sqlVentas();
+        ArrayList<Ventas> listVP = sqlven.getVentasPend();
+        cbxVentPend.removeAllItems();
+
+        for(int i = 0;i < listVP.size();i++){
+            cbxVentPend.addItem(new Ventas(listVP.get(i).getIdVent(),listVP.get(i).getTotal() , listVP.get(i).getIds()));
+            
+        }  
+    } 
+    private void llenarClientes(){
+        sqlVentas sqlven = new sqlVentas();
+        ArrayList<Clientes> listCL = sqlven.getClientes();
+        cbxClientes.removeAllItems();
+
+        for(int i = 0;i < listCL.size();i++){
+            cbxClientes.addItem(new Clientes(listCL.get(i).getIdCliente(), listCL.get(i).getNombre(), listCL.get(i).getApellidos()));
+            
+        }
+    }  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,45 +104,499 @@ public class panelVentas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
-        txtCodProd = new javax.swing.JTextField();
         btnAggProd = new javax.swing.JButton();
+        btnNuVE = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblVentas = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtDeposito = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtCantVen = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cbxClientes = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        cbxMetodo = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cbxProdV = new javax.swing.JComboBox<>();
+        cbxCatP = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        cbxVentPend = new javax.swing.JComboBox<>();
+        lblTotal = new javax.swing.JLabel();
+        btnFinalizar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        btnCaVe = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 102, 255));
-        jLabel1.setText("Codigo de Producto");
+        jLabel1.setText("Nombre:");
 
+        btnAggProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/boton-agregar.png"))); // NOI18N
         btnAggProd.setText("Agregar");
+        btnAggProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggProdActionPerformed(evt);
+            }
+        });
+
+        btnNuVE.setText("NUEVA VENTA");
+        btnNuVE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuVEActionPerformed(evt);
+            }
+        });
+        btnNuVE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnNuVEKeyReleased(evt);
+            }
+        });
+
+        tblVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblVentas);
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel2.setText("Codigo de Producto:");
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel3.setText("Cantidad:");
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel4.setText("Cliente:");
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 22)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 204, 51));
+        jLabel5.setText("$");
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 204, 51));
+        jLabel6.setText("$");
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel7.setText("Metodo de Pago:");
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setText("Total:");
+
+        cbxProdV.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxProdVItemStateChanged(evt);
+            }
+        });
+
+        cbxCatP.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxCatPItemStateChanged(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel9.setText("Pendientes:");
+
+        cbxVentPend.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxVentPendItemStateChanged(evt);
+            }
+        });
+        cbxVentPend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cbxVentPendMouseReleased(evt);
+            }
+        });
+
+        lblTotal.setFont(new java.awt.Font("Helvetica Neue", 0, 20)); // NOI18N
+
+        btnFinalizar.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/credit-card.png"))); // NOI18N
+        btnFinalizar.setText("  F4");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+        btnFinalizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnFinalizarKeyReleased(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel13.setText("Paga con:");
+
+        btnCaVe.setText("CANCELAR VENTA");
+        btnCaVe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCaVeActionPerformed(evt);
+            }
+        });
+        btnCaVe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnCaVeKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAggProd)
-                .addContainerGap(454, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnCaVe)
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel9)
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxVentPend, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxCatP, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxProdV, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel3)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtCantVen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnAggProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addComponent(jLabel4)
+                            .addGap(8, 8, 8)
+                            .addComponent(cbxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel7)
+                            .addGap(1, 1, 1)
+                            .addComponent(cbxMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13)
+                            .addGap(0, 0, 0)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, 0)
+                            .addComponent(txtDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(50, 50, 50)
+                            .addComponent(btnFinalizar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAggProd))
-                .addContainerGap(528, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxVentPend, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(cbxCatP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(cbxProdV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(txtCantVen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(btnAggProd))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFinalizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(cbxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel13))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbxProdVItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxProdVItemStateChanged
+       
+    }//GEN-LAST:event_cbxProdVItemStateChanged
+
+    private void cbxCatPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCatPItemStateChanged
+        if(evt.getStateChange() == ItemEvent.SELECTED){
+            int IdCat = cbxCatP.getItemAt(cbxCatP.getSelectedIndex()).getIdCat();
+            sqlProductos sqlPro = new sqlProductos();
+            ArrayList<Productos> listProd = sqlPro.getProductosVen(IdCat);
+            cbxProdV.removeAllItems();
+
+            for(int i = 0;i < listProd.size();i++){
+                cbxProdV.addItem(new Productos(listProd.get(i).getIdPr(),listProd.get(i).getNombre()));
+            }
+        }
+    }//GEN-LAST:event_cbxCatPItemStateChanged
+
+    private void cbxVentPendItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxVentPendItemStateChanged
+    if(evt.getStateChange() == ItemEvent.SELECTED){
+            this.carrito();
+            this.sumaTot();
+        }
+    }//GEN-LAST:event_cbxVentPendItemStateChanged
+
+    private void btnNuVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuVEActionPerformed
+        NuevaVent();
+    }//GEN-LAST:event_btnNuVEActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        terminarVent();
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnCaVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaVeActionPerformed
+        CancelarVent();
+    }//GEN-LAST:event_btnCaVeActionPerformed
+
+    private void btnAggProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggProdActionPerformed
+        InserProdVen();
+    }//GEN-LAST:event_btnAggProdActionPerformed
+
+    private void cbxVentPendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxVentPendMouseReleased
+        this.carrito();
+        this.sumaTot();
+    }//GEN-LAST:event_cbxVentPendMouseReleased
+
+    private void btnFinalizarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFinalizarKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_F4){
+            this.terminarVent();
+        }
+    }//GEN-LAST:event_btnFinalizarKeyReleased
+
+    private void btnNuVEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuVEKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_F5){
+            this.NuevaVent();
+        }
+    }//GEN-LAST:event_btnNuVEKeyReleased
+
+    private void btnCaVeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCaVeKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_F6){
+            this.CancelarVent();
+        }
+    }//GEN-LAST:event_btnCaVeKeyReleased
+    
+    public void CancelarVent(){
+        sqlVentas sqlVen = new sqlVentas();
+        Ventas ven = new Ventas();
+        int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
+        ven.setIdVent(idV);
+        if(sqlVen.DeleteVentas(ven)){
+            JOptionPane.showMessageDialog(null, "Venta eliminada");
+            this.llenarVentPend();
+            this.tblDef();
+            this.lblTotal.setText("");
+            txtCantVen.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al eliminar");
+        }        
+    }
+    
+    public void NuevaVent(){
+        sqlVentas sqlVen = new sqlVentas();
+        Ventas vent = new Ventas();
+        VentEstado VenE = new VentEstado();
+        MedodoPago MetP = new MedodoPago();
+        Clientes cli = new Clientes();
+        
+        VenE.setIdVE(1);
+        
+        if(sqlVen.AgregarVenta(vent,VenE,MetP,cli)){
+            JOptionPane.showMessageDialog(null, "Ya puede Agregar Productos");
+            llenarVentPend();
+            lblTotal.setText("");
+            this.carrito();
+            txtCantVen.setText("");
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al Agregar Venta"); 
+        }       
+    }
+    
+    public void tblDef(){  
+        DefaultTableModel dtm = new DefaultTableModel();
+        Tvent = this.tblVentas;
+        Tvent.setModel(dtm);
+        dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Tamaño","Unidad","Cantidad","Precio"});
+    }
+    
+    public void carrito(){
+        sqlVentas SQLvent = new sqlVentas();
+        Ventas vent = new Ventas();
+        DefaultTableModel dtm = new DefaultTableModel();
+        Tvent = this.tblVentas;
+        Tvent.setModel(dtm);
+        dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Tamaño","Unidad","Cantidad","Precio"});
+        int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
+        vent.setIdVent(idV);
+        rs = SQLvent.SelectCarrito(vent);
+        try {
+            while(rs.next()){
+              dtm.addRow(new Object[]{rs.getInt("p.idProducto"),rs.getString("p.nombre"),rs.getDouble("p.tamaño"),rs.getString("p.unidad"),rs.getInt("vp.cantidad"),(rs.getDouble("p.precioVent")*rs.getInt("vp.cantidad"))});
+              
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        this.sumaTot();
+    }
+    
+    private void InserProdVen(){
+            sqlVentas sqlV = new sqlVentas(); 
+            Ventas vent = new Ventas();
+            Productos prod = new Productos();
+            int cant = Integer.parseInt(txtCantVen.getText());
+            vent.setCantidad(cant);
+            int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
+            vent.setIdVent(idV);
+            int idP = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getIdPr();
+            prod.setIdPr(idP);
+            if(sqlV.InsertarProdVen(prod, vent)){
+                this.carrito(); 
+            }else{
+                JOptionPane.showMessageDialog(null, "Error"); 
+            } 
+    }
+        
+    public double sumaTot(){
+        int contar = tblVentas.getRowCount();
+        double Total = 0;
+        for(int i = 0; i < contar ; i++){
+            Total = Total + Double.parseDouble(tblVentas.getValueAt(i, 5).toString());
+        }
+        String tot = Double.toString(Total);
+        this.lblTotal.setText(tot);
+        return Total;
+    }
+    
+    public void terminarVent(){
+        if(this.txtCantVen.getText().equals("") || this.txtDeposito.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Llena los campos"); 
+        }else{
+            sqlVentas sqlVen = new sqlVentas();
+            Ventas ven = new Ventas();
+            VentEstado ve = new VentEstado();
+            MedodoPago mp = new MedodoPago();
+            Clientes cl = new Clientes();
+            double pagcon = Double.parseDouble(this.txtDeposito.getText());
+            double cambio = pagcon - sumaTot();
+            int idMP = cbxMetodo.getItemAt(cbxMetodo.getSelectedIndex()).getIdMP();
+            double tot = this.sumaTot();
+            ven.setTotal(tot);
+            ve.setIdVE(2);
+            mp.setIdMP(1);
+            int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
+            ven.setIdVent(idV);
+            int clien = cbxClientes.getItemAt(cbxClientes.getSelectedIndex()).getIdCliente();
+            cl.setIdCliente(clien);
+            if(sqlVen.UpdateVen(ven, ve, mp, cl)){
+               JOptionPane.showMessageDialog(null, "Total: "+ sumaTot() + " Cambio: " + cambio);
+               lblTotal.setText("");
+               txtCantVen.setText("");
+               txtDeposito.setText("");
+               this.llenarVentPend();
+               this.tblDef();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error"); 
+            }
+        }    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton btnAggProd;
+    javax.swing.JButton btnCaVe;
+    javax.swing.JButton btnFinalizar;
+    javax.swing.JButton btnNuVE;
+    javax.swing.JComboBox<Categoria> cbxCatP;
+    javax.swing.JComboBox<Clientes> cbxClientes;
+    javax.swing.JComboBox<MedodoPago> cbxMetodo;
+    javax.swing.JComboBox<Productos> cbxProdV;
+    javax.swing.JComboBox<Ventas> cbxVentPend;
+    javax.swing.JDesktopPane jDesktopPane1;
     javax.swing.JLabel jLabel1;
-    javax.swing.JTextField txtCodProd;
+    javax.swing.JLabel jLabel13;
+    javax.swing.JLabel jLabel2;
+    javax.swing.JLabel jLabel3;
+    javax.swing.JLabel jLabel4;
+    javax.swing.JLabel jLabel5;
+    javax.swing.JLabel jLabel6;
+    javax.swing.JLabel jLabel7;
+    javax.swing.JLabel jLabel8;
+    javax.swing.JLabel jLabel9;
+    javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel lblTotal;
+    javax.swing.JTable tblVentas;
+    public javax.swing.JTextField txtCantVen;
+    javax.swing.JTextField txtDeposito;
     // End of variables declaration//GEN-END:variables
 }

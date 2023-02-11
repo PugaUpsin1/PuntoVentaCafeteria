@@ -1,9 +1,9 @@
 
 package Vista.Configuracion;
 
-import Controlador.Hash;
-import Controlador.sqlUsuarios;
-import Modelo.Usuarios;
+import Modelo.Hash;
+import Modelo.sqlUsuarios;
+import Controlador.Usuarios;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -258,7 +258,7 @@ public class panelUsr extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNomActionPerformed
 
     public void actualizar(){
-                DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel();
         TUsr = this.tblUsr;
         TUsr.setModel(dtm);
         dtm.setColumnIdentifiers(new Object[]{"ID","Usuario","Nombre","Apellido","Telefono"});

@@ -4,7 +4,7 @@
  */
 package Vista.Configuracion;
 
-import Vista.Index;
+import Vista.Inicio.Index;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;

@@ -1,24 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Vista.Inventario;
 
+import Controlador.Usuarios;
+import Vista.Inicio.Index;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-/**
- *
- * @author issacpuga
- */
+
 public class panelInventario extends javax.swing.JPanel {
 
     /**
      * Creates new form panelPrincipal
      */
+    public int tipo2;
     public panelInventario() {
         initComponents();
+
+    }
+    
+    public panelInventario(int tipo){
+        initComponents();
+        
         this.setBackground(Color.WHITE);
+        
+        tipo2 = tipo;
+        listInventario LI = new listInventario(tipo2);
+        LI.setSize(1288, 535);
+        LI.setLocation(0, 0);
+        pnl_Inv.removeAll();
+        pnl_Inv.add(LI, BorderLayout.CENTER);
+        pnl_Inv.revalidate();
+        pnl_Inv.repaint();
+        
+        
+        if(tipo == 1){
+            
+        }else if(tipo == 2){
+            btnAdd.setVisible(false);
+         
+        }
+        
+        
+        
     }
 
     /**
@@ -31,7 +54,7 @@ public class panelInventario extends javax.swing.JPanel {
     private void initComponents() {
 
         btnLstInv = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         pnl_Inv = new javax.swing.JPanel();
 
         btnLstInv.setText("Inventario");
@@ -41,7 +64,12 @@ public class panelInventario extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Agregar");
+        btnAdd.setText("Agregar");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_InvLayout = new javax.swing.GroupLayout(pnl_Inv);
         pnl_Inv.setLayout(pnl_InvLayout);
@@ -62,8 +90,8 @@ public class panelInventario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(btnLstInv)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(1121, Short.MAX_VALUE))
+                .addComponent(btnAdd)
+                .addContainerGap(1116, Short.MAX_VALUE))
             .addComponent(pnl_Inv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -72,15 +100,16 @@ public class panelInventario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLstInv)
-                    .addComponent(jButton2))
+                    .addComponent(btnAdd))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnl_Inv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnl_Inv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLstInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLstInvActionPerformed
-        listInventario LI = new listInventario();
-        LI.setSize(1286, 535);
+        listInventario LI = new listInventario(tipo2);
+        LI.setSize(1288, 535);
         LI.setLocation(0, 0);
         pnl_Inv.removeAll();
         pnl_Inv.add(LI, BorderLayout.CENTER);
@@ -88,10 +117,21 @@ public class panelInventario extends javax.swing.JPanel {
         pnl_Inv.repaint();
     }//GEN-LAST:event_btnLstInvActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        addInv aI = new addInv();
+        aI.setSize(1288, 535);
+        aI.setLocation(0, 0);
+        pnl_Inv.removeAll();
+        pnl_Inv.add(aI, BorderLayout.CENTER);
+        pnl_Inv.revalidate();
+        pnl_Inv.repaint();
+    }//GEN-LAST:event_btnAddActionPerformed
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JButton btnAdd;
     javax.swing.JButton btnLstInv;
-    javax.swing.JButton jButton2;
     javax.swing.JPanel pnl_Inv;
     // End of variables declaration//GEN-END:variables
 }

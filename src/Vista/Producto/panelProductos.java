@@ -13,7 +13,7 @@ public class panelProductos extends javax.swing.JPanel {
         initComponents();
         this.setBackground(Color.WHITE);
         pnlLPr = new listProduct();
-        pnlLPr.setSize(1286, 535);
+        pnlLPr.setSize(1288, 535);
         pnlLPr.setLocation(0, 0);
         pProd.removeAll();
         pProd.add(pnlLPr, BorderLayout.CENTER);
@@ -33,7 +33,6 @@ public class panelProductos extends javax.swing.JPanel {
         pProd = new javax.swing.JPanel();
         btnProd = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout pProdLayout = new javax.swing.GroupLayout(pProd);
         pProd.setLayout(pProdLayout);
@@ -60,8 +59,6 @@ public class panelProductos extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Gestionar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,10 +68,8 @@ public class panelProductos extends javax.swing.JPanel {
                 .addComponent(btnProd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(1034, Short.MAX_VALUE))
-            .addComponent(pProd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(1113, Short.MAX_VALUE))
+            .addComponent(pProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,8 +77,7 @@ public class panelProductos extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -91,7 +85,7 @@ public class panelProductos extends javax.swing.JPanel {
 
     private void btnProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdActionPerformed
         pnlLPr = new listProduct();
-        pnlLPr.setSize(1286, 535);
+        pnlLPr.setSize(1288, 535);
         pnlLPr.setLocation(0, 0);
         pProd.removeAll();
         pProd.add(pnlLPr, BorderLayout.CENTER);
@@ -101,7 +95,7 @@ public class panelProductos extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         aggProduct pnlAggPr = new aggProduct();
-        pnlAggPr.setSize(1286, 535);
+        pnlAggPr.setSize(1288, 535);
         pnlAggPr.setLocation(0, 0);
         pProd.removeAll();
         pProd.add(pnlAggPr, BorderLayout.CENTER);
@@ -113,7 +107,6 @@ public class panelProductos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnProd;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel pProd;
     // End of variables declaration//GEN-END:variables
 }
