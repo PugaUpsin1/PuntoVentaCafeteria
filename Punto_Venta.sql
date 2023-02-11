@@ -248,5 +248,33 @@ INSERT INTO `categoria_pr` (`idCatego`, `Categoria`) VALUES
 (2, 'Galletas'),
 (3, 'Té');
 
+SELECT r.idInventario, r.ingrediente, r.cantidad, r.unidad, p.nombre 
+FROM receta_prod AS r 
+INNER JOIN productos AS p ON r.idProducto=p.idProducto 
+WHERE p.idProducto = 1;
+
+SELECT p.idProducto, p.nombre, p.tamaño, p.tamaño, p.unidad,p.precioVent, c.Categoria 
+FROM productos AS p 
+INNER JOIN categoria_pr AS c ON p.idCatego = c.idCatego WHERE c.idCatego = 1;
+
+SELECT * FROM ventas WHERE idVE = 1;
+
+ALTER TABLE venta_prod ADD cantidad int(55); 
+
+DELETE FROM usuarios WHERE idUsuario=2;
+DELETE FROM receta_prod WHERE idInventario=2;
+
+select * from venta_prod;
+
+Delete from ventas where idVent=2;
+ 
+SELECT p.idProducto, p.nombre, p.tamaño, p.unidad, vp.cantidad, p.precioVent
+FROM productos AS p 
+INNER JOIN venta_prod AS vp ON vp.idProducto = p.idProducto 
+INNER JOIN ventas AS v ON vp.idVent = v.idVent 
+WHERE v.idVent = 1;
+
+insert into venta_prod (idVent, idProducto) value (1,1),(1,2);
+
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------
 
