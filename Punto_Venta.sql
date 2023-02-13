@@ -75,7 +75,7 @@ idCliente int auto_increment primary key not null,
 Nombre varchar (45) not null,
 Apellidos varchar (45) not null,
 Edad int (30) not null,
-Telefono int (30) not null,
+Telefono varchar (45) not null,
 Email varchar (45) not null,
 NumVisi int (30) not null
 );
@@ -132,6 +132,98 @@ ON UPDATE cascade
 );
 
 -- registros
+
+INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`) VALUES
+(1, 'Administrador'),
+(2, 'Usuario');
+
+INSERT INTO `usuarios` (`idUsuario`, `usuario`, `nombre`, `apellido`, `tel`, `password`, `id_tipo`) VALUES
+(1, 'admin', 'Issac', 'Puga', 'null', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1),
+(2, 'usr', 'Diana', 'Rice', 'null', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2);
+
+INSERT INTO `categoria_pr` (`idCatego`, `Categoria`) VALUES
+(1, 'Cafe'),
+(2, 'Galletas'),
+(3, 'Té');
+
+INSERT INTO `inventario` (`idInventario`, `nombre`, `Cantidad`, `unidad`, `PrecioUni`, `Proveedor`) VALUES
+(1, 'Leche', 50, 'Litros', 10, 'Soriana'),
+(2, 'Cafe', 20, 'Kilogramos', 5, 'Soriana'),
+(3, 'Azucar Glass', 20, 'Kilogramos', 10, 'Sams'),
+(4, 'Sal', 10, 'Kilogramos', 10, 'Sams'),
+(5, 'Pimienta', 10, 'Kilogramos', 10, 'Sams'),
+(6, 'Caramello', 20, 'Kilogramos', 10, 'Sams'),
+(7, 'Vasos', 20, 'Kilogramos', 5, 'Sams'),
+(8, 'Azucar Morena', 20, 'KIlogramos', 5, 'Soriana'),
+(9, 'Cafe Capuccino', 20, 'Kilogramos', 10, 'Nescafe'),
+(10, 'Cafe Irlandes', 20, 'Kilogramos', 10, 'Soriana'),
+(11, 'Canela', 20, 'Kilogramos', 10, 'Fruteria'),
+(12, 'Chocolate', 20, 'Kilogramos', 1, 'Sams'),
+(13, 'Cocoa', 20, 'Kilogramos ', 12, 'Sams'),
+(14, 'Te', 15, 'Kilogramos', 12, 'Sams'),
+(15, 'Leche Desc', 12, 'Litros', 10, 'Soriana'),
+(16, 'Leche Light', 20, 'Litros', 12, 'Soriana'),
+(17, 'Mermelada', 10, 'Litros', 20, 'Soriana'),
+(18, 'Jamon', 10, 'Kilogramos', 20, 'Soriaana'),
+(19, 'Jamon', 10, 'Kilogramos', 20, 'Soriaana'),
+(20, 'Aguacate', 20, 'Kilogramos', 60, 'Fruteria Macias');
+
+INSERT INTO `productos` (`idProducto`, `nombre`, `tamaño`, `unidad`, `precioVent`, `idCatego`) VALUES
+(1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
+(2, 'Chai Latte', 8, 'Onzas', 60, 1),
+(3, 'Galletas de Avena', 200, 'Gramos', 50, 2),
+(4, 'Te de Manzanilla', 200, 'Gramos', 50, 3),
+(5, 'Cafe Americano', 4, 'Onzas', 50, 1),
+(6, 'Frapuccino Moka ', 8, 'Onzas', 80, 1),
+(7, 'Cafe Expresso', 4, 'Onzas', 50, 1);
+
+INSERT INTO `receta_prod` (`id_ingrd`, `ingrediente`, `cantidad`, `unidad`, `idProducto`, `idInventario`) VALUES
+(1, 'Leche', 0.35, 'Litros', 1, 1),
+(3, 'Leche', 0.5, 'Litros', 2, 1),
+(4, 'Leche', 0.3, 'Litros', 5, 1),
+(5, 'Cafe', 0.4, 'Kilogramos', 5, 2),
+(6, 'Azucar Morena', 0.02, 'Kilogramos', 4, 8),
+(7, 'Vasos', 1, 'Kilogramos', 4, 7),
+(8, 'Cafe', 0.2, 'Litros', 1, 2),
+(9, 'Leche', 1, 'Litros', 3, 1);
+
+INSERT INTO `venta_estado` (`idVE`, `Estado`) VALUES
+(1, 'Pendiente'),
+(2, 'Terminada');
+
+INSERT INTO `Clientes` (`idCliente`, `Nombre`, `Apellidos`, `Edad`, `Telefono`, `Email`, `NumVisi`) VALUES
+(1, 'Predeterminado', '', '0', '0', '', 1),
+(2, 'Alejandra', 'Alvarez', '22', '6699346578', 'ale@mail.com', 1),
+(3, 'Justin', 'Hernandez', '20', '6692452365', 'justin@mail.com', 1),
+(4, 'Julieta', 'Alvarez', '21', '6699343434', 'yuli@mail.com', 1);
+
+INSERT INTO `metodo_pago` (`idMP`, `Metodo`) VALUES
+(1, 'Efectivo'),
+(2, 'Targeta');
+
+INSERT INTO `ventas` (`idVent`, `total`, `referencias`, `fecha`, `idVE`, `idMP`, `idCliente`) VALUES
+(37, 200, NULL, '2023-02-10 06:46:52', 2, 1, 1),
+(38, 100, NULL, '2023-02-10 06:47:02', 2, 1, 1),
+(39, 50, '0', '2023-02-10 06:41:25', 2, 1, 1),
+(41, 50, NULL, '2023-02-10 06:50:17', 2, 1, 1),
+(42, 50, NULL, '2023-02-10 06:53:52', 2, 1, 1),
+(43, 0, NULL, '2023-02-10 07:03:20', 2, 1, 1),
+(44, 0, NULL, '2023-02-10 07:03:49', 2, 1, 1),
+(45, 50, NULL, '2023-02-10 07:10:26', 2, 1, 2),
+(46, 60, NULL, '2023-02-10 08:55:06', 2, 1, 1),
+(47, 120, NULL, '2023-02-10 08:57:33', 2, 1, 1),
+(48, 100, NULL, '2023-02-10 08:58:12', 2, 1, 1),
+(49, 50, '1234455', '2023-02-10 09:45:35', 2, 1, 1),
+(50, 50, NULL, '2023-02-10 10:06:19', 2, 1, 1),
+(51, 100, '234542345', '2023-02-10 10:06:59', 2, 1, 1),
+(52, 50, NULL, '2023-02-10 10:49:53', 2, 1, 1),
+(53, 160, NULL, '2023-02-10 10:53:29', 2, 1, 1),
+(54, 240, NULL, '2023-02-10 19:35:16', 2, 1, 2),
+(55, 100, NULL, '2023-02-10 19:37:17', 2, 1, 3),
+(56, 100, NULL, '2023-02-10 22:32:58', 2, 1, 3),
+(58, 0, NULL, NULL, 1, 1, 1),
+(59, 0, NULL, NULL, 1, 1, 1);
+
 INSERT INTO `venta_prod` (`idVP`, `cantidad`, `idVent`, `idProducto`) VALUES
 (36, 1, 37, 1),
 (37, 2, 37, 3),
@@ -157,96 +249,8 @@ INSERT INTO `venta_prod` (`idVP`, `cantidad`, `idVent`, `idProducto`) VALUES
 (58, 1, 56, 3),
 (59, 1, 56, 1);
 
-INSERT INTO `venta_estado` (`idVE`, `Estado`) VALUES
-(1, 'Pendiente'),
-(2, 'Terminada');
+-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO `ventas` (`idVent`, `total`, `referencias`, `fecha`, `idVE`, `idMP`, `idCliente`) VALUES
-(37, 200, NULL, '2023-02-10 06:46:52', 2, 1, 1),
-(38, 100, NULL, '2023-02-10 06:47:02', 2, 1, 1),
-(39, 50, '0', '2023-02-10 06:41:25', 2, 1, 1),
-(41, 50, NULL, '2023-02-10 06:50:17', 2, 1, 1),
-(42, 50, NULL, '2023-02-10 06:53:52', 2, 1, 1),
-(43, 0, NULL, '2023-02-10 07:03:20', 2, 1, 1),
-(44, 0, NULL, '2023-02-10 07:03:49', 2, 1, 1),
-(45, 50, NULL, '2023-02-10 07:10:26', 2, 1, 2),
-(46, 60, NULL, '2023-02-10 08:55:06', 2, 1, 1),
-(47, 120, NULL, '2023-02-10 08:57:33', 2, 1, 1),
-(48, 100, NULL, '2023-02-10 08:58:12', 2, 1, 1),
-(49, 50, '1234455', '2023-02-10 09:45:35', 2, 1, 1),
-(50, 50, NULL, '2023-02-10 10:06:19', 2, 1, 1),
-(51, 100, '234542345', '2023-02-10 10:06:59', 2, 1, 1),
-(52, 50, NULL, '2023-02-10 10:49:53', 2, 1, 1),
-(53, 160, NULL, '2023-02-10 10:53:29', 2, 1, 1),
-(54, 240, NULL, '2023-02-10 19:35:16', 2, 1, 2),
-(55, 100, NULL, '2023-02-10 19:37:17', 2, 1, 3),
-(56, 100, NULL, '2023-02-10 22:32:58', 2, 1, 3),
-(58, 0, NULL, NULL, 1, 1, 1),
-(59, 0, NULL, NULL, 1, 1, 1);
-
-INSERT INTO `usuarios` (`idUsuario`, `usuario`, `nombre`, `apellido`, `tel`, `password`, `id_tipo`) VALUES
-(1, 'admin', 'Issac', 'Puga', 'null', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1),
-(2, 'usr', 'Diana', 'Rice', 'null', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2);
-
-INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`) VALUES
-(1, 'Administrador'),
-(2, 'Usuario');
-
-INSERT INTO `receta_prod` (`id_ingrd`, `ingrediente`, `cantidad`, `unidad`, `idProducto`, `idInventario`) VALUES
-(1, 'Leche', 0.35, 'Litros', 1, 1),
-(3, 'Leche', 0.5, 'Litros', 2, 1),
-(4, 'Leche', 0.3, 'Litros', 5, 1),
-(5, 'Cafe', 0.4, 'Kilogramos', 5, 2),
-(6, 'Azucar Morena', 0.02, 'Kilogramos', 4, 8),
-(7, 'Vasos', 1, 'Kilogramos', 4, 7),
-(8, 'Cafe', 0.2, 'Litros', 1, 2),
-(9, 'Leche', 1, 'Litros', 3, 1);
-
-INSERT INTO `productos` (`idProducto`, `nombre`, `tamaño`, `unidad`, `precioVent`, `idCatego`) VALUES
-(1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
-(2, 'Chai Latte', 8, 'Onzas', 60, 1),
-(3, 'Galletas de Avena', 200, 'Gramos', 50, 2),
-(4, 'Te de Manzanilla', 200, 'Gramos', 50, 3),
-(5, 'Cafe Americano', 4, 'Onzas', 50, 1),
-(6, 'Frapuccino Moka ', 8, 'Onzas', 80, 1),
-(7, 'Cafe Expresso', 4, 'Onzas', 50, 1);
-
-INSERT INTO `metodo_pago` (`idMP`, `Metodo`) VALUES
-(1, 'Efectivo'),
-(2, 'Targeta');
-
-INSERT INTO `inventario` (`idInventario`, `nombre`, `Cantidad`, `unidad`, `PrecioUni`, `Proveedor`) VALUES
-(1, 'Leche', 50, 'Litros', 10, 'Soriana'),
-(2, 'Cafe', 20, 'Kilogramos', 5, 'Soriana'),
-(3, 'Azucar Glass', 20, 'Kilogramos', 10, 'Sams'),
-(4, 'Sal', 10, 'Kilogramos', 10, 'Sams'),
-(5, 'Pimienta', 10, 'Kilogramos', 10, 'Sams'),
-(6, 'Caramello', 20, 'Kilogramos', 10, 'Sams'),
-(7, 'Vasos', 20, 'Kilogramos', 5, 'Sams'),
-(8, 'Azucar Morena', 20, 'KIlogramos', 5, 'Soriana'),
-(9, 'Cafe Capuccino', 20, 'Kilogramos', 10, 'Nescafe'),
-(10, 'Cafe Irlandes', 20, 'Kilogramos', 10, 'Soriana'),
-(11, 'Canela', 20, 'Kilogramos', 10, 'Fruteria'),
-(12, 'Chocolate', 20, 'Kilogramos', 1, 'Sams'),
-(13, 'Cocoa', 20, 'Kilogramos ', 12, 'Sams'),
-(14, 'Te', 15, 'Kilogramos', 12, 'Sams'),
-(15, 'Leche Desc', 12, 'Litros', 10, 'Soriana'),
-(16, 'Leche Light', 20, 'Litros', 12, 'Soriana'),
-(17, 'Mermelada', 10, 'Litros', 20, 'Soriana'),
-(18, 'Jamon', 10, 'Kilogramos', 20, 'Soriaana'),
-(19, 'Jamon', 10, 'Kilogramos', 20, 'Soriaana'),
-(20, 'Aguacate', 20, 'Kilogramos', 60, 'Fruteria Macias');
-
-INSERT INTO `Clientes` (`idCliente`, `Nombre`, `Apellidos`, `Edad`, `Telefono`, `Email`, `NumVisi`) VALUES
-(1, 'Predeterminado', '', '0', '0', '', 1),
-(2, 'Alejandra', 'Alvarez', '22', '6699346578', 'ale@mail.com', 1),
-(3, 'Justin', 'Hernandez', '20', '6692452365', 'justin@mail.com', 1),
-(4, 'Julieta', 'Alvarez', '21', '6699343434', 'yuli@mail.com', 1);
-
-INSERT INTO `categoria_pr` (`idCatego`, `Categoria`) VALUES
-(1, 'Cafe'),
-(2, 'Galletas'),
-(3, 'Té');
 
 SELECT r.idInventario, r.ingrediente, r.cantidad, r.unidad, p.nombre 
 FROM receta_prod AS r 
@@ -277,4 +281,39 @@ WHERE v.idVent = 1;
 insert into venta_prod (idVent, idProducto) value (1,1),(1,2);
 
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------
+-- trigger
+DELIMITER //
+	CREATE TRIGGER restar_ingredientes
+	AFTER UPDATE ON ventas
+	FOR EACH ROW
+	BEGIN
+	  DECLARE @cantidad INT;
+	  DECLARE @id_producto INT;
+	  DECLARE @id_ingrediente INT;
+	  DECLARE @cantidad_ingre INT;
+      DECLARE @idV INT;
+      
+      SELECT @idV = idVent 
+      FROM ventas 
+      WHERE idVent = NEW.id;
 
+	  SELECT @cantidad = cantidad, @id_producto = idProducto
+	  FROM venta_prod
+	  WHERE idVent = @idV;
+
+	  SELECT @cantidad_ingre = cantidad
+	  FROM receta_prod
+	  WHERE idProducto = @id_producto;
+
+	  SET @cantidad_ingre = @cantidad * @cantidad_necesaria;
+
+	  SELECT @id_ingrediente = id_ingrd
+	  FROM receta_prod
+	  WHERE id_producto = @id_producto;
+
+	  UPDATE inventario
+	  SET cantidad = cantidad - @cantidad_necesaria
+	  WHERE id_ingrediente = @id_ingrediente;
+	END;
+    
+    DELIMITER ;
