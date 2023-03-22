@@ -2,10 +2,12 @@
 package Modelo;
 
 import Controlador.Clientes;
+import Controlador.Inventario;
 import Controlador.MedodoPago;
 import Controlador.Productos;
 import Controlador.VentEstado;
 import Controlador.Ventas;
+import Vista.Venta.panelVentas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,10 +24,12 @@ import javax.swing.JOptionPane;
 
 public class sqlVentas extends conexion{
     
+    ArrayList<Inventario> invArr = new ArrayList<Inventario>();
     
     public boolean AgregarVenta(Ventas ven , VentEstado ve, MedodoPago mp, Clientes cli){
         PreparedStatement ps = null;
         Connection con = Conectar();
+        invArr.clear();
         String sql =  "INSERT INTO Ventas (total,referencias,fecha,idVE,idMP,idCliente) VALUE (?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(sql);
@@ -35,9 +39,8 @@ public class sqlVentas extends conexion{
             ps.setInt(4, ve.getIdVE());
             ps.setInt(5, 1);
             ps.setInt(6, 1);
-            System.out.println(ps);
             ps.execute();
-            System.out.println(ps);
+//            System.out.println(ps);
             return true;
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(conexion.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
@@ -46,20 +49,99 @@ public class sqlVentas extends conexion{
         }
     }
     
-    public boolean InsertarProdVen(Productos prod, Ventas vent){
+    public ResultSet SelectId(Ventas ven){  
+        Connection con;
+        con = Conectar();
+        Statement st;
+        ResultSet rs = null;
+        int idVe = 0;
+        String sql = "SELECT MAX(idVent) FROM ventas";
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            if(rs.next()){
+                idVe = rs.getInt(1);
+//                System.out.println(idVe);
+                ven.setIdVent(idVe);
+
+                
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return rs;
+
+    }
+    
+    public boolean InsertarProdVen(ArrayList<Integer> can ,ArrayList<Integer> idvent,ArrayList<Integer> idpro){
         PreparedStatement ps = null;
         Connection con = Conectar();
-        String sql =  "INSERT INTO venta_prod (cantidad, idVent, idProducto) VALUE (?,?,?)";
         try {
+
+           
+//            System.out.println(can);
+//            System.out.println(idpro);
+//            System.out.println(idvent);
+            String sql =  "INSERT INTO venta_prod (cantidad, idVent, idProducto) VALUE (?,?,?)";
             ps = con.prepareStatement(sql);
-            ps.setInt(1, vent.getCantidad());
-            ps.setInt(2, vent.getIdVent());
-            ps.setInt(3, prod.getIdPr());
-            System.out.println(ps);
-            ps.execute();
-            System.out.println(ps);
+            for (int i = 0; i < can.size(); i++) {
+                invArr.clear();
+                ps.setInt(1, can.get(i));
+                ps.setInt(2, idvent.get(i));
+                ps.setInt(3, idpro.get(i));
+                ps.executeUpdate();
+                System.out.println(ps);
+                SelectIngre(idpro.get(i), can.get(i));
+                UpdateInv();
+            }
             return true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(conexion.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            System.out.println(ex);
+            return false;
+        }
+    }
+    
+    public ResultSet SelectIngre(int idp, double cn){
+        Connection con;
+        con = Conectar();
+        Statement st;
+        ResultSet rs = null;
+//        System.out.println(idp+"\n"+cn);
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM receta_prod WHERE idProducto = " + idp);
+            while(rs.next()){
+                Inventario in = new Inventario();
+                in.setIdInv(rs.getInt("idInventario"));
+                in.setCingr(rs.getDouble("cantidad") *cn);
+                invArr.add(in);
+            }
+//            for (int i = 0; i < invArr.size(); i++){
+//            System.out.println(invArr.get(i).getIdInv() +" "+invArr.get(i).getCingr());
+//            }
+        } catch (Exception e) {
+        }
+        
+        return rs;
+    }
+    
+    public boolean UpdateInv(){
+        PreparedStatement ps = null;
+        Connection con = Conectar();
+        
+        try {
+            String sql = "UPDATE inventario SET cantidad = cantidad - ? WHERE idInventario = ?";
+            ps = con.prepareStatement(sql);
+            for (int i = 0; i < invArr.size(); i++) {
+                ps.setDouble(1, invArr.get(i).getCingr());
+                ps.setInt(2, invArr.get(i).getIdInv());
+                System.out.println(ps);
+                ps.executeUpdate();
+            }
+            return true;
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(conexion.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
             System.out.println(ex);
             return false;
@@ -194,7 +276,30 @@ public class sqlVentas extends conexion{
             ps.setInt(5, mp.getIdMP());
             ps.setInt(6, cli.getIdCliente());
             ps.setInt(7, vent.getIdVent());
-            System.out.println(ps);
+            ps.execute();
+            System.out.println(ps);            
+            return true;
+        }catch (SQLException ex) {
+            System.err.println(ex);
+            return false;
+        }
+    }
+    
+    public boolean ProdInv(){
+        Connection con;
+        con = Conectar();
+        PreparedStatement ps;
+        
+        SimpleDateFormat dtf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String fecha = dtf.format(dateObj);
+
+        
+        String sql = "UPDATE ventas SET total = ?, referencias = ?, fecha = ?, idVE = ?, idMP = ? ,idCliente = ? WHERE idVent = ?" ;        
+        try{
+            ps = con.prepareStatement(sql);
             ps.execute();
             System.out.println(ps);            
             return true;

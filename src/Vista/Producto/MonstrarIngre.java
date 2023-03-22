@@ -8,6 +8,8 @@ import Controlador.Inventario;
 import Controlador.Productos;
 import Modelo.sqlInventario;
 import Modelo.sqlProductos;
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import javax.swing.JTable;
@@ -20,8 +22,10 @@ import javax.swing.table.DefaultTableModel;
 public class MonstrarIngre extends javax.swing.JFrame {
     ResultSet rs;
     JTable TMos;
+    Container cont = this.getContentPane();
     public MonstrarIngre() {
         initComponents();
+        cont.setBackground(Color.white);
     }
     
     public MonstrarIngre(int num){
@@ -32,7 +36,17 @@ public class MonstrarIngre extends javax.swing.JFrame {
         sqlProductos sqlProd = new sqlProductos();
         Productos prod = new Productos();
         
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblIngre.getTableHeader().setReorderingAllowed(false) ;
         TMos = this.tblIngre;
         TMos.setModel(dtm);
         

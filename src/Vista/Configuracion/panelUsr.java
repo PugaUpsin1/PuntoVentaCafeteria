@@ -19,9 +19,19 @@ public class panelUsr extends javax.swing.JPanel {
     
     public panelUsr() {
         initComponents();
-        this.setBackground(Color.PINK);
+        this.setBackground(Color.white);
         
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblUsr.getTableHeader().setReorderingAllowed(false) ;
         TUsr = this.tblUsr;
         TUsr.setModel(dtm);
         dtm.setColumnIdentifiers(new Object[]{"ID","Usuario","Nombre","Apellido","Telefono"});
@@ -258,7 +268,17 @@ public class panelUsr extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNomActionPerformed
 
     public void actualizar(){
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblUsr.getTableHeader().setReorderingAllowed(false) ;
         TUsr = this.tblUsr;
         TUsr.setModel(dtm);
         dtm.setColumnIdentifiers(new Object[]{"ID","Usuario","Nombre","Apellido","Telefono"});

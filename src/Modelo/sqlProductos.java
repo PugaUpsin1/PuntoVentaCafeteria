@@ -194,6 +194,9 @@ public class sqlProductos extends conexion{
                 Productos pr = new Productos();
                 pr.setIdPr(rs.getInt("idProducto"));
                 pr.setNombre(rs.getString("nombre"));
+                pr.setMedida(rs.getDouble("tamaño"));
+                pr.setUnidad(rs.getString("unidad"));
+                pr.setPrecioVenta(rs.getDouble("precioVent"));
                 LP.add(pr);
             }
             

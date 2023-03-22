@@ -2,6 +2,7 @@ package Vista.Inventario;
 
 import Controlador.Inventario;
 import Modelo.sqlInventario;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 public class addInv extends javax.swing.JPanel {
@@ -9,6 +10,7 @@ public class addInv extends javax.swing.JPanel {
 
     public addInv() {
         initComponents();
+        this.setBackground(Color.white);
     }
 
 

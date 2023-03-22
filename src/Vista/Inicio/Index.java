@@ -3,6 +3,7 @@ package Vista.Inicio;
 import Vista.Venta.panelVentas;
 import Controlador.Usuarios;
 import Vista.Configuracion.Configuracion;
+import Vista.Gestion.panelGestion;
 import Vista.Inventario.panelInventario;
 import Vista.Producto.panelProductos;
 import java.awt.BorderLayout;
@@ -29,6 +30,7 @@ public class Index extends javax.swing.JFrame {
         cont.setBackground(new Color(163, 189, 129));
         cont.setSize(1288, 696);
         pIndex.setSize(1288, 570);
+        
 
         panelVentas p1 = new panelVentas();
         p1.setSize(1288, 570);
@@ -37,7 +39,6 @@ public class Index extends javax.swing.JFrame {
         pIndex.add(p1, BorderLayout.CENTER);
         pIndex.revalidate();
         pIndex.repaint();
-
         lblUsr.setText(usr.getNombre() + " " + usr.getApellido());
         this.usr = usr;
 
@@ -55,42 +56,101 @@ public class Index extends javax.swing.JFrame {
     private void initComponents() {
 
         pIndex = new javax.swing.JPanel();
-        btnVentas = new javax.swing.JButton();
-        btnInvent = new javax.swing.JButton();
-        btnConf = new javax.swing.JButton();
-        btnProd = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        lblUsr = new javax.swing.JLabel();
+        pnl3 = new javax.swing.JPanel();
         btnCerrarSesion = new javax.swing.JButton();
+        lblUsr = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        pnl2 = new javax.swing.JPanel();
+        btnConf = new javax.swing.JButton();
         btnEstadisticas = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnInvent = new javax.swing.JButton();
+        btnProd = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         pIndex.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        pIndex.setPreferredSize(new java.awt.Dimension(1000, 523));
+        pIndex.setPreferredSize(new java.awt.Dimension(1288, 570));
 
         javax.swing.GroupLayout pIndexLayout = new javax.swing.GroupLayout(pIndex);
         pIndex.setLayout(pIndexLayout);
         pIndexLayout.setHorizontalGroup(
             pIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1286, Short.MAX_VALUE)
         );
         pIndexLayout.setVerticalGroup(
             pIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 568, Short.MAX_VALUE)
         );
 
-        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/punto-de-venta.png"))); // NOI18N
-        btnVentas.setText("Ventas");
-        btnVentas.setPreferredSize(new java.awt.Dimension(90, 23));
-        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Logo Diana.png"))); // NOI18N
+
+        pnl3.setBackground(new java.awt.Color(163, 189, 129));
+
+        btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVentasActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
             }
         });
+
+        lblUsr.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        lblUsr.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel2.setText("Usuario:");
+
+        javax.swing.GroupLayout pnl3Layout = new javax.swing.GroupLayout(pnl3);
+        pnl3.setLayout(pnl3Layout);
+        pnl3Layout.setHorizontalGroup(
+            pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrarSesion))
+                .addGap(25, 25, 25))
+        );
+        pnl3Layout.setVerticalGroup(
+            pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(pnl3Layout.createSequentialGroup()
+                        .addComponent(lblUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(btnCerrarSesion)))
+                .addGap(17, 17, 17))
+        );
+
+        pnl2.setBackground(new java.awt.Color(163, 189, 129));
+
+        btnConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/configuraciones.png"))); // NOI18N
+        btnConf.setText("Cofiguracion");
+        btnConf.setMinimumSize(new java.awt.Dimension(100, 30));
+        btnConf.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnConf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfActionPerformed(evt);
+            }
+        });
+
+        btnEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/indicador-clave-de-rendimiento.png"))); // NOI18N
+        btnEstadisticas.setText("Gestion");
+        btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadisticasActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/revisar.png"))); // NOI18N
+        jButton2.setText("Clientes");
 
         btnInvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/granos-de-cafe.png"))); // NOI18N
         btnInvent.setText("  Inventario");
@@ -98,15 +158,6 @@ public class Index extends javax.swing.JFrame {
         btnInvent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventActionPerformed(evt);
-            }
-        });
-
-        btnConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/configuraciones.png"))); // NOI18N
-        btnConf.setMinimumSize(new java.awt.Dimension(100, 30));
-        btnConf.setPreferredSize(new java.awt.Dimension(100, 30));
-        btnConf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfActionPerformed(evt);
             }
         });
 
@@ -119,26 +170,48 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Logo Diana.png"))); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabel2.setText("Usuario:");
-
-        lblUsr.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        lblUsr.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
-
-        btnCerrarSesion.setText("Cerrar Sesión");
-        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/punto-de-venta.png"))); // NOI18N
+        btnVentas.setText("Ventas");
+        btnVentas.setPreferredSize(new java.awt.Dimension(90, 23));
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarSesionActionPerformed(evt);
+                btnVentasActionPerformed(evt);
             }
         });
 
-        btnEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/indicador-clave-de-rendimiento.png"))); // NOI18N
-        btnEstadisticas.setText("Gestion");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/revisar.png"))); // NOI18N
-        jButton2.setText("Clientes");
+        javax.swing.GroupLayout pnl2Layout = new javax.swing.GroupLayout(pnl2);
+        pnl2.setLayout(pnl2Layout);
+        pnl2Layout.setHorizontalGroup(
+            pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnProd, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConf, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        pnl2Layout.setVerticalGroup(
+            pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProd, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConf, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,56 +220,25 @@ public class Index extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel1)
-                .addGap(44, 44, 44)
-                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(btnProd, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pnl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(197, 197, 197)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCerrarSesion)
-                            .addComponent(lblUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnConf, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, 1290, Short.MAX_VALUE)
+                .addComponent(pnl3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProd, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(lblUsr, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCerrarSesion)))))
-                .addGap(6, 6, 6)
-                .addComponent(pIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnl3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -247,8 +289,19 @@ public class Index extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnConfActionPerformed
 
-    public static void privilegios(Usuarios usr) {
+    private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
+        panelGestion pnlGes = new panelGestion();
+        pnlGes.setSize(1288, 570);
+        pnlGes.setLocation(0, 0);
+        pIndex.removeAll();
+        pIndex.add(pnlGes, BorderLayout.CENTER);
+        pIndex.revalidate();
+        pIndex.repaint();
+    }//GEN-LAST:event_btnEstadisticasActionPerformed
 
+    
+    public static void privilegios(Usuarios usr) {
+        
     }
 
     public static void main(String args[]) {
@@ -295,5 +348,7 @@ public class Index extends javax.swing.JFrame {
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel lblUsr;
     javax.swing.JPanel pIndex;
+    javax.swing.JPanel pnl2;
+    javax.swing.JPanel pnl3;
     // End of variables declaration//GEN-END:variables
 }

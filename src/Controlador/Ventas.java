@@ -8,6 +8,7 @@ public class Ventas {
     private String fecha;
     private String ids;
     private int cantidad;
+    private Object PR[][];
     
     public Ventas() {
     }
@@ -67,6 +68,16 @@ public class Ventas {
     public void setIds(String ids) {
         this.ids = ids;
     }
+
+    public Object[][] getPR() {
+        return PR;
+    }
+
+    public void setPR(Object[][] PR) {
+        this.PR = PR;
+    }
+    
+    
     
     public String toString(){
         return ids;

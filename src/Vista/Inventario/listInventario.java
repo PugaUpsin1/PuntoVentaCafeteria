@@ -4,6 +4,7 @@ import Controlador.Inventario;
 import Controlador.Usuarios;
 import Modelo.sqlInventario;
 import Modelo.sqlUsuarios;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -26,20 +27,12 @@ public class listInventario extends javax.swing.JPanel {
     Usuarios usr;
     public listInventario() {
         initComponents();
-        
-        
-        
-    
-      
-        
-        
-        
     }
 
     public listInventario(int tipo2){
         initComponents();
         this.tbl();
-        
+        this.setBackground(Color.white);
         if(tipo2 == 1){
             
         }else if(tipo2 == 2){
@@ -243,7 +236,17 @@ public class listInventario extends javax.swing.JPanel {
         sqlInventario sqlInv = new sqlInventario();
         Inventario inv = new Inventario();
         
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblInv.getTableHeader().setReorderingAllowed(false) ;
         Tinv = this.tblInv;
         Tinv.setModel(dtm);
         
@@ -290,7 +293,17 @@ public class listInventario extends javax.swing.JPanel {
     }
     
     public void tbl(){
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblInv.getTableHeader().setReorderingAllowed(false) ;
         Tinv = this.tblInv;
         Tinv.setModel(dtm);
         dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Cantidad","Unidad","Precio Unitario", "Proveedores"});

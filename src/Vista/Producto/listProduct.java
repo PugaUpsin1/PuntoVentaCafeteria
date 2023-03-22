@@ -6,6 +6,7 @@ package Vista.Producto;
 
 import Modelo.sqlInventario;
 import Modelo.sqlProductos;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -24,7 +25,7 @@ public class listProduct extends javax.swing.JPanel {
     public static listProduct pnlLPr;
     public listProduct() {
         initComponents();
-        
+        this.setBackground(Color.white);
         this.tbl();
     }
 
@@ -179,7 +180,17 @@ public class listProduct extends javax.swing.JPanel {
 
     
     public void tbl(){
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+        tblprod.getTableHeader().setReorderingAllowed(false) ;
         Tprod = this.tblprod;
         Tprod.setModel(dtm);
         dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Tamaño","Unidad","Precio Venta","Categoria"});
@@ -198,7 +209,7 @@ public class listProduct extends javax.swing.JPanel {
                 JTable table = (JTable) Mouse_evt.getSource();
                 Point point = Mouse_evt.getPoint();
                 int row = table.rowAtPoint(point);
-                if(Mouse_evt.getClickCount() == 1 ){
+                if(Mouse_evt.getClickCount() == 1){
                     txtIDprod.setText(tblprod.getValueAt(tblprod.getSelectedRow(), 0).toString());
                     txtNom.setText(tblprod.getValueAt(tblprod.getSelectedRow(), 1).toString());
                     txtTamaño.setText(tblprod.getValueAt(tblprod.getSelectedRow(), 2).toString());

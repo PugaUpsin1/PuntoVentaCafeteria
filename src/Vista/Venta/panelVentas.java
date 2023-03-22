@@ -37,30 +37,51 @@ public class panelVentas extends javax.swing.JPanel {
     public int idMeP;
     public int idCli;
     public int idVenta;
+    DefaultTableModel dtm = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            } 
+        };
+    ArrayList<Integer> cList = new ArrayList<Integer>();
+    ArrayList<Integer> idvList = new ArrayList<Integer>();
+    ArrayList<Integer> idplist = new ArrayList<Integer>();
+    
+    
     // [1280, 569]
     public panelVentas() {
         initComponents();
         this.setBackground(Color.white);
-        this.setSize(1288,469);
+        this.setSize(1288,570);
         
         llenarCatego();
         llenarMetodo();
-        llenarVentPend();
         llenarClientes();
-        tblDef();
+      //  tblDef();
         
+        this.lblNumTick.setText("#");
         
-//        DateFormat dateForm = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
-
-//    String date = ZonedDateTime.now(ZoneId.of("America/Mexico"))
-//                .format(DateTimeFormatter.ofPattern("MM-dd-yyy, hh:mm:ss a"));
-         
+        tblVentas.getTableHeader().setReorderingAllowed(false) ;
+        Tvent = this.tblVentas;
+        dtm.addColumn("ID");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Tamaño");
+        dtm.addColumn("Unidad");
+        dtm.addColumn("Cantidad");
+        dtm.addColumn("Precio");
+        Tvent.setModel(dtm);
+        
     }
 
     private void llenarCatego(){
         sqlProductos sqlPro = new sqlProductos();
         ArrayList<Categoria> listCat = sqlPro.getCategoria();
         cbxCatP.removeAllItems();
+        
 
         for(int i = 0;i < listCat.size();i++){
             cbxCatP.addItem(new Categoria(listCat.get(i).getIdCat(), listCat.get(i).getCategoria()));
@@ -74,17 +95,7 @@ public class panelVentas extends javax.swing.JPanel {
         for(int i = 0;i < listMP.size();i++){
             cbxMetodo.addItem(new MedodoPago(listMP.get(i).getIdMP(), listMP.get(i).getMetodo()));
         }
-    }  
-    public void llenarVentPend(){
-        sqlVentas sqlven = new sqlVentas();
-        ArrayList<Ventas> listVP = sqlven.getVentasPend();
-        cbxVentPend.removeAllItems();
-
-        for(int i = 0;i < listVP.size();i++){
-            cbxVentPend.addItem(new Ventas(listVP.get(i).getIdVent(),listVP.get(i).getTotal() , listVP.get(i).getIds()));
-            
-        }  
-    } 
+    }   
     private void llenarClientes(){
         sqlVentas sqlven = new sqlVentas();
         ArrayList<Clientes> listCL = sqlven.getClientes();
@@ -123,12 +134,12 @@ public class panelVentas extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         cbxProdV = new javax.swing.JComboBox<>();
         cbxCatP = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        cbxVentPend = new javax.swing.JComboBox<>();
         lblTotal = new javax.swing.JLabel();
         btnFinalizar = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         btnCaVe = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        lblNumTick = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -222,20 +233,6 @@ public class panelVentas extends javax.swing.JPanel {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabel9.setText("Pendientes:");
-
-        cbxVentPend.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxVentPendItemStateChanged(evt);
-            }
-        });
-        cbxVentPend.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                cbxVentPendMouseReleased(evt);
-            }
-        });
-
         lblTotal.setFont(new java.awt.Font("Helvetica Neue", 0, 20)); // NOI18N
 
         btnFinalizar.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
@@ -267,72 +264,78 @@ public class panelVentas extends javax.swing.JPanel {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 19)); // NOI18N
+        jLabel10.setText("TICKET:");
+
+        lblNumTick.setFont(new java.awt.Font("Helvetica Neue", 0, 19)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(btnCaVe)
-                .addGap(15, 15, 15)
-                .addComponent(jLabel9)
-                .addGap(6, 6, 6)
-                .addComponent(cbxVentPend, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2)
-                .addGap(6, 6, 6)
-                .addComponent(cbxCatP, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addGap(6, 6, 6)
-                .addComponent(cbxProdV, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel3)
-                .addGap(6, 6, 6)
-                .addComponent(txtCantVen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(btnAggProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel4)
-                .addGap(8, 8, 8)
-                .addComponent(cbxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel7)
-                .addGap(1, 1, 1)
-                .addComponent(cbxMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216)
-                .addComponent(jLabel13)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(txtDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnFinalizar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel4)
+                        .addGap(8, 8, 8)
+                        .addComponent(cbxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7)
+                        .addGap(1, 1, 1)
+                        .addComponent(cbxMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(216, 216, 216)
+                        .addComponent(jLabel13)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(txtDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(btnFinalizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxCatP, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxProdV, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel3)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtCantVen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnAggProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnCaVe)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNumTick, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(cbxVentPend, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel10)
+                    .addComponent(lblNumTick, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuVE, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -400,20 +403,14 @@ public class panelVentas extends javax.swing.JPanel {
             cbxProdV.removeAllItems();
 
             for(int i = 0;i < listProd.size();i++){
-                cbxProdV.addItem(new Productos(listProd.get(i).getIdPr(),listProd.get(i).getNombre()));
+                cbxProdV.addItem(new Productos(listProd.get(i).getIdPr(),listProd.get(i).getNombre(),listProd.get(i).getMedida(),listProd.get(i).getUnidad(), listProd.get(i).getPrecioVenta()));
             }
         }
     }//GEN-LAST:event_cbxCatPItemStateChanged
 
-    private void cbxVentPendItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxVentPendItemStateChanged
-    if(evt.getStateChange() == ItemEvent.SELECTED){
-            this.carrito();
-            this.sumaTot();
-        }
-    }//GEN-LAST:event_cbxVentPendItemStateChanged
-
     private void btnNuVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuVEActionPerformed
-        NuevaVent();
+        this.NuevaVent();
+       
     }//GEN-LAST:event_btnNuVEActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
@@ -428,11 +425,6 @@ public class panelVentas extends javax.swing.JPanel {
         InserProdVen();
     }//GEN-LAST:event_btnAggProdActionPerformed
 
-    private void cbxVentPendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxVentPendMouseReleased
-        this.carrito();
-        this.sumaTot();
-    }//GEN-LAST:event_cbxVentPendMouseReleased
-
     private void btnFinalizarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFinalizarKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_F4){
             this.terminarVent();
@@ -442,6 +434,7 @@ public class panelVentas extends javax.swing.JPanel {
     private void btnNuVEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuVEKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_F5){
             this.NuevaVent();
+            
         }
     }//GEN-LAST:event_btnNuVEKeyReleased
 
@@ -452,85 +445,102 @@ public class panelVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCaVeKeyReleased
     
     public void CancelarVent(){
-        sqlVentas sqlVen = new sqlVentas();
-        Ventas ven = new Ventas();
-        int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
-        ven.setIdVent(idV);
-        if(sqlVen.DeleteVentas(ven)){
-            JOptionPane.showMessageDialog(null, "Venta eliminada");
-            this.llenarVentPend();
-            this.tblDef();
-            this.lblTotal.setText("");
-            txtCantVen.setText("");
+        if(this.lblNumTick.getText().equals("#")){
+            JOptionPane.showMessageDialog(null, "No hay venta en curso"); 
         }else{
-            JOptionPane.showMessageDialog(null, "Error al eliminar");
-        }        
+            sqlVentas sqlVen = new sqlVentas();
+            Ventas ven = new Ventas();
+            sqlVen.SelectId(ven);
+            System.out.println(ven.getIdVent());
+            ven.setIdVent(ven.getIdVent());
+            if(sqlVen.DeleteVentas(ven)){
+                JOptionPane.showMessageDialog(null, "Venta eliminada");
+                this.lblTotal.setText("");
+                txtCantVen.setText("");
+                this.lblNumTick.setText("#");
+                dtm.setRowCount(0);
+                Tvent.revalidate();
+                Tvent.repaint();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al eliminar");
+            }    
+        }    
+    }
+    
+    public void ObtenerVen(){
+        sqlVentas sqlVen = new sqlVentas();
+        Ventas vent = new Ventas();
+        sqlVen.SelectId(vent);
+        String idv = String.valueOf(vent.getIdVent());
+        this.lblNumTick.setText(idv);
     }
     
     public void NuevaVent(){
-        sqlVentas sqlVen = new sqlVentas();
-        Ventas vent = new Ventas();
-        VentEstado VenE = new VentEstado();
-        MedodoPago MetP = new MedodoPago();
-        Clientes cli = new Clientes();
-        
-        VenE.setIdVE(1);
-        
-        if(sqlVen.AgregarVenta(vent,VenE,MetP,cli)){
-            JOptionPane.showMessageDialog(null, "Ya puede Agregar Productos");
-            llenarVentPend();
-            lblTotal.setText("");
-            this.carrito();
+        if(this.lblNumTick.getText().equals("#")){
+            sqlVentas sqlVen = new sqlVentas();
+            Ventas vent = new Ventas();
+            VentEstado VenE = new VentEstado();
+            MedodoPago MetP = new MedodoPago();
+            Clientes cli = new Clientes();
+
+            VenE.setIdVE(1);
+
+            if(sqlVen.AgregarVenta(vent,VenE,MetP,cli)){
+                JOptionPane.showMessageDialog(null, "Ya puede Agregar Productos");
+                ObtenerVen();
+                lblTotal.setText("");
+                txtCantVen.setText("");
+                cList.clear();
+                idplist.clear();
+                idvList.clear();
+                dtm.setRowCount(0);
+                Tvent.revalidate();
+                Tvent.repaint();
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al Agregar Venta"); 
+            } 
+        }else{
+            JOptionPane.showMessageDialog(null, "Venta en Curso"); 
+        }    
+    }
+    
+    public void InserProdVen(){
+        if(this.lblNumTick.getText().equals("#")){
+            JOptionPane.showMessageDialog(null, "Inicie una Venta"); 
+        }else{
+            String []info = new String[6];
+            int idP = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getIdPr();
+            String idPStr = String.valueOf(idP);
+            info[0]= idPStr; 
+            String nom = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getNombre();
+            info[1] = nom;
+            double med = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getMedida();
+            String medStr = String.valueOf(med);
+            info[2] = medStr;
+            info[3] = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getUnidad();
+            info[4] = this.txtCantVen.getText();
+            int caInt = Integer.parseInt(this.txtCantVen.getText());
+            double prec = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getPrecioVenta();
+            String precStr = String.valueOf(prec * caInt);
+            info[5] = precStr;
+
+            dtm.addRow(info);
+
+            this.sumaTot();
+            Ventas vent = new Ventas();
+            sqlVentas sqlVen = new sqlVentas();
+            sqlVen.SelectId(vent);
+            String idv = String.valueOf(vent.getIdVent());
+
+            cList.add(caInt);
+            idplist.add(idP);
+            idvList.add(vent.getIdVent());
+            cbxProdV.setSelectedIndex(0);
+            cbxCatP.setSelectedIndex(0);
             txtCantVen.setText("");
             
-        }else{
-            JOptionPane.showMessageDialog(null, "Error al Agregar Venta"); 
-        }       
-    }
-    
-    public void tblDef(){  
-        DefaultTableModel dtm = new DefaultTableModel();
-        Tvent = this.tblVentas;
-        Tvent.setModel(dtm);
-        dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Tamaño","Unidad","Cantidad","Precio"});
-    }
-    
-    public void carrito(){
-        sqlVentas SQLvent = new sqlVentas();
-        Ventas vent = new Ventas();
-        DefaultTableModel dtm = new DefaultTableModel();
-        Tvent = this.tblVentas;
-        Tvent.setModel(dtm);
-        dtm.setColumnIdentifiers(new Object[]{"ID","Nombre","Tamaño","Unidad","Cantidad","Precio"});
-        int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
-        vent.setIdVent(idV);
-        rs = SQLvent.SelectCarrito(vent);
-        try {
-            while(rs.next()){
-              dtm.addRow(new Object[]{rs.getInt("p.idProducto"),rs.getString("p.nombre"),rs.getDouble("p.tamaño"),rs.getString("p.unidad"),rs.getInt("vp.cantidad"),(rs.getDouble("p.precioVent")*rs.getInt("vp.cantidad"))});
-              
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
         }
-        this.sumaTot();
-    }
-    
-    private void InserProdVen(){
-            sqlVentas sqlV = new sqlVentas(); 
-            Ventas vent = new Ventas();
-            Productos prod = new Productos();
-            int cant = Integer.parseInt(txtCantVen.getText());
-            vent.setCantidad(cant);
-            int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
-            vent.setIdVent(idV);
-            int idP = cbxProdV.getItemAt(cbxProdV.getSelectedIndex()).getIdPr();
-            prod.setIdPr(idP);
-            if(sqlV.InsertarProdVen(prod, vent)){
-                this.carrito(); 
-            }else{
-                JOptionPane.showMessageDialog(null, "Error"); 
-            } 
     }
         
     public double sumaTot(){
@@ -545,38 +555,65 @@ public class panelVentas extends javax.swing.JPanel {
     }
     
     public void terminarVent(){
-        if(this.txtCantVen.getText().equals("") || this.txtDeposito.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Llena los campos"); 
+        if(this.lblNumTick.getText().equals("#")){
+            JOptionPane.showMessageDialog(null, "Inicie una Venta"); 
         }else{
-            sqlVentas sqlVen = new sqlVentas();
-            Ventas ven = new Ventas();
-            VentEstado ve = new VentEstado();
-            MedodoPago mp = new MedodoPago();
-            Clientes cl = new Clientes();
-            double pagcon = Double.parseDouble(this.txtDeposito.getText());
-            double cambio = pagcon - sumaTot();
-            int idMP = cbxMetodo.getItemAt(cbxMetodo.getSelectedIndex()).getIdMP();
-            double tot = this.sumaTot();
-            ven.setTotal(tot);
-            ve.setIdVE(2);
-            mp.setIdMP(1);
-            int idV = cbxVentPend.getItemAt(cbxVentPend.getSelectedIndex()).getIdVent();
-            ven.setIdVent(idV);
-            int clien = cbxClientes.getItemAt(cbxClientes.getSelectedIndex()).getIdCliente();
-            cl.setIdCliente(clien);
-            if(sqlVen.UpdateVen(ven, ve, mp, cl)){
-               JOptionPane.showMessageDialog(null, "Total: "+ sumaTot() + " Cambio: " + cambio);
-               lblTotal.setText("");
-               txtCantVen.setText("");
-               txtDeposito.setText("");
-               this.llenarVentPend();
-               this.tblDef();
+            if(this.txtDeposito.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Llena los campos"); 
             }else{
-                JOptionPane.showMessageDialog(null, "Error"); 
-            }
-        }    
-    }
+                sqlVentas sqlVen = new sqlVentas();
+                Ventas ven = new Ventas();
+                VentEstado ve = new VentEstado();
+                MedodoPago mp = new MedodoPago();
+                Clientes cl = new Clientes();
+                double pagcon = Double.parseDouble(this.txtDeposito.getText());
+                double cambio = pagcon - sumaTot();
+                int idMP = cbxMetodo.getItemAt(cbxMetodo.getSelectedIndex()).getIdMP();
+                double tot = this.sumaTot();
+                ven.setTotal(tot);
+                ve.setIdVE(2);
+                mp.setIdMP(idMP);
+                sqlVen.SelectId(ven);
+                ven.setIdVent(ven.getIdVent());
+                int clien = cbxClientes.getItemAt(cbxClientes.getSelectedIndex()).getIdCliente();
+                cl.setIdCliente(clien);
+                if(sqlVen.UpdateVen(ven, ve, mp, cl)){
+                    sqlVen.InsertarProdVen(obtenerCantidad(),obtenerIdVen(),obtenerIdP());
+                    JOptionPane.showMessageDialog(null, "Total: "+ sumaTot() + " Cambio: " + cambio);
+                    lblTotal.setText("");
+                    txtCantVen.setText("");
+                    txtDeposito.setText("");
+                    lblNumTick.setText("#");
+                    dtm.setRowCount(0);
+                    Tvent.revalidate();
+                    Tvent.repaint();
+                    cbxProdV.setSelectedIndex(0);
+                    cbxCatP.setSelectedIndex(0);
+                    cbxMetodo.setSelectedIndex(0);
+                    cbxClientes.setSelectedIndex(0);
 
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error"); 
+                }
+            } 
+        }
+    }
+    
+    public ArrayList<Integer> obtenerCantidad() {
+        ArrayList<Integer> canArr = new ArrayList<Integer>(); 
+        canArr.addAll(cList);
+        return canArr;
+    }   
+    public ArrayList<Integer> obtenerIdP() {
+        ArrayList<Integer> arrIdp = new ArrayList<Integer>();
+        arrIdp.addAll(idplist);
+        return arrIdp;
+    }
+    public ArrayList<Integer> obtenerIdVen() {
+        ArrayList<Integer> arrIdV = new ArrayList<Integer>();  
+        arrIdV.addAll(idvList);
+        return arrIdV;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton btnAggProd;
     javax.swing.JButton btnCaVe;
@@ -586,9 +623,9 @@ public class panelVentas extends javax.swing.JPanel {
     javax.swing.JComboBox<Clientes> cbxClientes;
     javax.swing.JComboBox<MedodoPago> cbxMetodo;
     javax.swing.JComboBox<Productos> cbxProdV;
-    javax.swing.JComboBox<Ventas> cbxVentPend;
     javax.swing.JDesktopPane jDesktopPane1;
     javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel13;
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel3;
@@ -597,8 +634,8 @@ public class panelVentas extends javax.swing.JPanel {
     javax.swing.JLabel jLabel6;
     javax.swing.JLabel jLabel7;
     javax.swing.JLabel jLabel8;
-    javax.swing.JLabel jLabel9;
     javax.swing.JScrollPane jScrollPane1;
+    javax.swing.JLabel lblNumTick;
     public javax.swing.JLabel lblTotal;
     javax.swing.JTable tblVentas;
     public javax.swing.JTextField txtCantVen;

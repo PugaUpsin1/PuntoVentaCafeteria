@@ -131,6 +131,11 @@ ON DELETE cascade
 ON UPDATE cascade
 );
 
+create table if not exists Info(
+idIn int auto_increment primary key,
+mensaje varchar(90)
+);
+
 -- registros
 
 INSERT INTO `tipo_usuario` (`id_tipo`, `nombre`) VALUES
@@ -170,6 +175,7 @@ INSERT INTO `inventario` (`idInventario`, `nombre`, `Cantidad`, `unidad`, `Preci
 
 INSERT INTO `productos` (`idProducto`, `nombre`, `tamaño`, `unidad`, `precioVent`, `idCatego`) VALUES
 (1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
+(1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
 (2, 'Chai Latte', 8, 'Onzas', 60, 1),
 (3, 'Galletas de Avena', 200, 'Gramos', 50, 2),
 (4, 'Te de Manzanilla', 200, 'Gramos', 50, 3),
@@ -199,7 +205,7 @@ INSERT INTO `Clientes` (`idCliente`, `Nombre`, `Apellidos`, `Edad`, `Telefono`, 
 
 INSERT INTO `metodo_pago` (`idMP`, `Metodo`) VALUES
 (1, 'Efectivo'),
-(2, 'Targeta');
+(2, 'Tarjeta');
 
 INSERT INTO `ventas` (`idVent`, `total`, `referencias`, `fecha`, `idVE`, `idMP`, `idCliente`) VALUES
 (37, 200, NULL, '2023-02-10 06:46:52', 2, 1, 1),
@@ -256,6 +262,9 @@ SELECT r.idInventario, r.ingrediente, r.cantidad, r.unidad, p.nombre
 FROM receta_prod AS r 
 INNER JOIN productos AS p ON r.idProducto=p.idProducto 
 WHERE p.idProducto = 1;
+select * from inventario where idInventario = 1;
+select * from inventario where idInventario = 2;
+
 
 SELECT p.idProducto, p.nombre, p.tamaño, p.tamaño, p.unidad,p.precioVent, c.Categoria 
 FROM productos AS p 
@@ -270,8 +279,10 @@ DELETE FROM receta_prod WHERE idInventario=2;
 
 select * from venta_prod;
 
+Delete from venta_prod where idVent=97;
+
 Delete from ventas where idVent=2;
- 
+
 SELECT p.idProducto, p.nombre, p.tamaño, p.unidad, vp.cantidad, p.precioVent
 FROM productos AS p 
 INNER JOIN venta_prod AS vp ON vp.idProducto = p.idProducto 
@@ -280,16 +291,18 @@ WHERE v.idVent = 1;
 
 insert into venta_prod (idVent, idProducto) value (1,1),(1,2);
 
+select * from inventario;
+
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------
 -- trigger
-DELIMITER //
-	CREATE TRIGGER restar_ingredientes
-	AFTER UPDATE ON ventas
-	FOR EACH ROW
-	BEGIN
-	  DECLARE @cantidad INT;
+DELIMITER $$
+CREATE TRIGGER restar_ingredientes
+AFTER UPDATE ON ventas
+FOR EACH ROW
+BEGIN
+	  DECLARE @cantidad INT ;
 	  DECLARE @id_producto INT;
-	  DECLARE @id_ingrediente INT;
+	  DECLARE @id_inventario INT;
 	  DECLARE @cantidad_ingre INT;
       DECLARE @idV INT;
       
@@ -307,13 +320,39 @@ DELIMITER //
 
 	  SET @cantidad_ingre = @cantidad * @cantidad_necesaria;
 
-	  SELECT @id_ingrediente = id_ingrd
+	  SELECT @id_inventario = idInventario
 	  FROM receta_prod
-	  WHERE id_producto = @id_producto;
+	  WHERE idProducto = @id_producto;
 
 	  UPDATE inventario
 	  SET cantidad = cantidad - @cantidad_necesaria
-	  WHERE id_ingrediente = @id_ingrediente;
-	END;
-    
-    DELIMITER ;
+	  WHERE idInventario = @id_inventario;
+END;
+DELIMITER ;
+
+drop trigger mensaje_inf;
+
+DELIMITER $$
+CREATE TRIGGER mensaje_inf
+AFTER INSERT ON ventas
+FOR EACH ROW
+BEGIN
+	INSERT INTO Info (mensaje,num) VALUES ("Se inserto una venta",1);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER mensaje_inf
+AFTER INSERT ON ventas
+FOR EACH ROW
+BEGIN
+	DECLARE idv INT;
+    DECLARE idP INT;
+    DECLARE cantPro Double;
+    set idv = new.idVent;
+    SELECT cantPro = cantidad, idP = idProducto
+    FROM venta_prod
+    WHERE idVent = idv;
+    INSERT INTO Info (mensaje,num) VALUES ("Se inserto una venta",idP);
+END$$
+DELIMITER ;

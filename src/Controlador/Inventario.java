@@ -8,6 +8,7 @@ public class Inventario {
     private String Unidad;
     private double PreUnit;
     private String Proveedores;
+    private double cingr;
 
     public Inventario() {
     }
@@ -66,6 +67,16 @@ public class Inventario {
     public void setProveedores(String Proveedores) {
         this.Proveedores = Proveedores;
     }
+
+    public double getCingr() {
+        return cingr;
+    }
+
+    public void setCingr(double cingr) {
+        this.cingr = cingr;
+    }
+    
+    
     
     public String toString(){
         return Nombre;

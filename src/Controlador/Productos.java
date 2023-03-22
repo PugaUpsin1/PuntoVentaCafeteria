@@ -16,9 +16,12 @@ public class Productos {
     public Productos() {
     }
 
-    public Productos(int idPr, String nombre) {
+    public Productos(int idPr, String nombre, double medida, String Unidad,double precioVenta) {
         this.idPr = idPr;
         this.nombre = nombre;
+        this.medida = medida;
+        this.Unidad = Unidad;
+        this.precioVenta = precioVenta;
     }
     
 
