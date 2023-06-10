@@ -1,10 +1,14 @@
 
 package Modelo;
 
+import Controlador.MedodoPago;
+import Controlador.TipoUsuario;
 import Controlador.Usuarios;
 import com.mysql.jdbc.Connection.*;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class sqlUsuarios extends conexion{
@@ -78,6 +82,29 @@ public class sqlUsuarios extends conexion{
             java.util.logging.Logger.getLogger(sqlUsuarios.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
             return false;
         }
+    }
+    
+    public ArrayList<TipoUsuario> getTipoUsuario(){
+        Connection con = Conectar();
+        Statement st;
+        ResultSet rs = null;
+        ArrayList<TipoUsuario> LT = new ArrayList<>();
+        
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM tipo_usuario");
+            
+            while(rs.next()){
+                TipoUsuario TU = new TipoUsuario();
+                TU.setIdTipo(rs.getInt("id_tipo"));
+                TU.setTipo(rs.getString("nombre"));
+                LT.add(TU);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(sqlProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return LT;
     }
     
     

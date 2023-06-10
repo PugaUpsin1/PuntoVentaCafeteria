@@ -7,7 +7,7 @@ public class Clientes {
     private String Nombre;
     private String Apellidos;
     private int Edad;
-    private int Telefono;
+    private String Telefono;
     private String Email;
     private int NumVisi;
 
@@ -55,13 +55,15 @@ public class Clientes {
         this.Edad = Edad;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return Telefono;
     }
 
-    public void setTelefono(int Telefono) {
+    public void setTelefono(String Telefono) {
         this.Telefono = Telefono;
     }
+
+    
 
     public String getEmail() {
         return Email;

@@ -7,6 +7,7 @@ package Vista.Inicio;
 import Modelo.Hash;
 import Modelo.sqlUsuarios;
 import Controlador.Usuarios;
+import Modelo.conexion;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
@@ -102,7 +103,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
+                        .addGap(81, 81, 81)
                         .addComponent(btnCancelar)
                         .addGap(6, 6, 6)
                         .addComponent(btnIngresar))

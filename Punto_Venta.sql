@@ -77,6 +77,7 @@ Apellidos varchar (45) not null,
 Edad int (30) not null,
 Telefono varchar (45) not null,
 Email varchar (45) not null,
+NumVisi int (30) not null,
 NumVisi int (30) not null
 );
 
@@ -174,7 +175,6 @@ INSERT INTO `inventario` (`idInventario`, `nombre`, `Cantidad`, `unidad`, `Preci
 (20, 'Aguacate', 20, 'Kilogramos', 60, 'Fruteria Macias');
 
 INSERT INTO `productos` (`idProducto`, `nombre`, `tamaño`, `unidad`, `precioVent`, `idCatego`) VALUES
-(1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
 (1, 'Cafe Sencillo', 8, 'Onzas', 50, 1),
 (2, 'Chai Latte', 8, 'Onzas', 60, 1),
 (3, 'Galletas de Avena', 200, 'Gramos', 50, 2),

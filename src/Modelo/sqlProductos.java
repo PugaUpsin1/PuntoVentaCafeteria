@@ -100,7 +100,7 @@ public class sqlProductos extends conexion{
             ps.setString(3, prod.getUndIngre());
             ps.setInt(4, prod.getIdPr());
             ps.setInt(5, inv.getIdInv());
-   
+               System.out.println(ps);
             ps.execute();
             System.out.println(ps);
             return true;
@@ -140,13 +140,13 @@ public class sqlProductos extends conexion{
         return rs;
     }
         
-    public boolean AgregarCatego(Productos prod){
+    public boolean AgregarCatego(Categoria cat){
         PreparedStatement ps = null;
         Connection con = Conectar();
-        String sql =  "INSERT INTO categoria_pr (Categoria) VALUE (?,?,?,?,?)";
+        String sql =  "INSERT INTO categoria_pr (Categoria) VALUE (?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, prod.getCategoria());
+            ps.setString(1, cat.getCategoria());
             ps.execute();
             System.out.println(ps);
             return true;

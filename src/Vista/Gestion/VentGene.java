@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Vista.Gestion;
 
 import Controlador.Gestion;
@@ -14,13 +11,29 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import jp.co.epson.upos.UPOSConst;
+import jpos.JposException;
+import jpos.POSPrinter;
+import jpos.POSPrinterConst;
+import jpos.POSPrinterControl114;
+import jpos.events.StatusUpdateEvent;
+
 /**
  *
  * @author issacpuga
@@ -30,6 +43,8 @@ public class VentGene extends javax.swing.JPanel {
     JTable TEstVen;
     public int idV;
     DefaultTableModel dtm = new DefaultTableModel();
+    DefaultTableModel dtm2 = new DefaultTableModel();
+    POSPrinterControl114 ptr = (POSPrinterControl114)new POSPrinter();
     public VentGene() {
         initComponents();
         this.setBackground(Color.white);
@@ -43,8 +58,7 @@ public class VentGene extends javax.swing.JPanel {
 //        SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
 //        String date = dcn.format(jFecha.getDate() );
        
-        
-        
+       
         
         
         
@@ -69,8 +83,10 @@ public class VentGene extends javax.swing.JPanel {
         lblTotVent = new javax.swing.JLabel();
         lblDinTot = new javax.swing.JLabel();
         btnMV = new javax.swing.JButton();
-        btnEV = new javax.swing.JButton();
+        btnIMP = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        btnEV = new javax.swing.JButton();
+        btnEXP = new javax.swing.JButton();
 
         jFecha.setBorder(new javax.swing.border.MatteBorder(null));
         jFecha.setDateFormatString("yyyy-MM-dd");
@@ -117,11 +133,11 @@ public class VentGene extends javax.swing.JPanel {
             }
         });
 
-        btnEV.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        btnEV.setText("Eliminar Venta");
-        btnEV.addActionListener(new java.awt.event.ActionListener() {
+        btnIMP.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        btnIMP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imprimir-contorno-del-boton.png"))); // NOI18N
+        btnIMP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEVActionPerformed(evt);
+                btnIMPActionPerformed(evt);
             }
         });
 
@@ -132,69 +148,97 @@ public class VentGene extends javax.swing.JPanel {
             }
         });
 
+        btnEV.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        btnEV.setText("Eliminar Venta");
+        btnEV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEVActionPerformed(evt);
+            }
+        });
+
+        btnEXP.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        btnEXP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/exportar.png"))); // NOI18N
+        btnEXP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEXPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(6, 6, 6)
                         .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
                         .addComponent(btnMV)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEV))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(btnEV)
+                        .addGap(8, 8, 8)
+                        .addComponent(btnIMP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTotVent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDinTot, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(179, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(143, 143, 143)
+                                        .addComponent(jLabel3)))
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel4)
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTotVent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblDinTot, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEXP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMV, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEV, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIMP, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnMV)
-                                .addComponent(btnEV)))))
+                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(lblTotVent, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(lblDinTot, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(92, 92, 92)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(lblTotVent, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(lblDinTot, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(10, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEXP)
+                        .addGap(34, 34, 34))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -214,10 +258,27 @@ public class VentGene extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnMVActionPerformed
 
+    private void btnIMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIMPActionPerformed
+        String idString = tblVenGen.getValueAt(tblVenGen.getSelectedRow(), 0).toString();
+        int idVe = Integer.parseInt(idString);
+//        this.imprimir(idVe);
+    }//GEN-LAST:event_btnIMPActionPerformed
+
     private void btnEVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEVActionPerformed
         this.EliminarVent();
         this.tbl();
     }//GEN-LAST:event_btnEVActionPerformed
+
+    private void btnEXPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEXPActionPerformed
+        ExportarExcel obj;
+
+        try {
+            obj = new ExportarExcel();
+            obj.exportarExcel(tblVenGen);
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex);
+        }
+    }//GEN-LAST:event_btnEXPActionPerformed
 
     public void tbl(){
         sqlGestion sqlges = new sqlGestion();
@@ -292,10 +353,263 @@ public class VentGene extends javax.swing.JPanel {
         } 
     }
     
+    void imprimir(int idV){
+        
+        try {
+                               
+				//Open the device.
+				//Use the name of the device that connected with your computer.
+				ptr.open("IMPOS");
 
+				//Get the exclusive control right for the opened device.
+				//Then the device is disable from other application.
+				ptr.claim(1000);
+
+				//Enable the device.
+				ptr.setDeviceEnabled(true);
+                                
+			}
+			catch(JposException ex){
+				JOptionPane.showMessageDialog(null, ex);
+                                
+			}
+			// JavaPOS's code for Step3
+			try{
+				// JavaPOS's code for Step5
+				//Even if using any printers, 0.01mm unit makes it possible to print neatly.
+				ptr.setMapMode(POSPrinterConst.PTR_MM_METRIC);
+				// JavaPOS's code for Step5--END
+
+				//Output by the high quality mode
+				ptr.setRecLetterQuality(true);
+
+				// JavaPOS's code for Step6
+				if (ptr.getCapRecBitmap() == true)
+					//Register a bitmap
+					if (ptr.getCapRecBitmap() == true)
+					{
+						boolean bSetBitmapSuccess = false;
+						for (int iRetryCount = 0; iRetryCount < 5; iRetryCount++)
+						{
+							try{
+								//Register a bitmap
+								ptr.setBitmap(1, POSPrinterConst.PTR_S_RECEIPT, "javapos.bmp",
+										(ptr.getRecLineWidth() / 2), POSPrinterConst.PTR_BM_CENTER);
+								bSetBitmapSuccess = true;
+								break;
+							} catch (JposException ex)
+							{
+								if (ex.getErrorCode() == UPOSConst.UPOS_E_FAILURE && ex.getErrorCodeExtended() == 0 && ex.getMessage().equals("It is not initialized."))
+								{
+									try{
+										Thread.sleep(1000);
+									} catch (InterruptedException ex2)
+									{
+									}
+								}
+							}
+						}
+						
+
+					}
+				// JavaPOS's code for Step6--END
+			}
+			catch(JposException ex){
+			}
+        
+        
+        DateFormat df = DateFormat.getDateInstance();
+		Time t = new Time(System.currentTimeMillis());
+
+		String time = df.format(Calendar.getInstance().getTime()) + " " + t.toString() + "\n";
+
+		String    bcData = "4902720005074";
+               sqlGestion sqlges = new sqlGestion();
+               Ventas ven = new Ventas();
+               Productos prod = new Productos();
+               
+                
+               rs = sqlges.ticket(idV);
+               ArrayList<String> nombres = new ArrayList<String>();
+               ArrayList<Integer> cantidades = new ArrayList<Integer>();
+               ArrayList<Double> precios = new ArrayList<Double>();
+               ArrayList<Double> totales = new ArrayList<Double>();
+
+                try {
+                    while (rs.next()) {
+                        double total = rs.getDouble("v.total");
+                        String nombre = rs.getString("p.nombre");
+                        int cantidad = rs.getInt("vp.cantidad");
+                        double precio = rs.getDouble("p.precioVent");
+                        
+                        nombres.add(nombre);
+                        cantidades.add(cantidad);
+                        precios.add(precio);
+                        totales.add(total);
+                        
+                    }
+                } catch (SQLException e) {
+                    System.err.println(e);
+                }
+
+                String[] item = new String[nombres.size()];
+                double[] price = new double[cantidades.size()];
+                int[] cant = new int[precios.size()];
+                double[] to = new double[precios.size()];
+                double[] subtot = new double[precios.size()];
+
+                for (int i = 0; i < nombres.size(); i++) {
+                    item[i] = nombres.get(i);
+                    cant[i] = cantidades.get(i);
+                    price[i] = precios.get(i);
+                    to[i] = totales.get(i);
+                }
+                
+                for (int i = 0; i < precios.size(); i++) {
+                    subtot[i] = cant[i] * price[i];
+                }
+                
+                double tot = to[0];
+                
+
+//		String[] item = {"apples", "grapes", "bananas", "lemons", "oranges"};
+//		String[] price = {"10.00", "20.00", "30.00", "40.00", "50.00"};
+
+		// JavaPOS's code for Step2
+		try{
+			// JavaPOS's code for Step6
+			if (ptr.getCapRecPresent() == true){
+				//Batch processing mode
+				ptr.transactionPrint(POSPrinterConst.PTR_S_RECEIPT, POSPrinterConst.PTR_TP_TRANSACTION);
+				// JavaPOS's code for Step6--END
+
+				// JavaPOS's code for Step3
+				//Print a registered bitmap.
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|1B");
+				// JavaPOS's code for Step3--END
+
+				// Print address
+				//   ESC|N = Normal char
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA\u001b|3C Bolligue´s \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|150uF");
+				//Print phone number
+				//   ESC|rA = Right side char
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA RFC   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA CALLE   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA FRACCIONAMIENTO   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA\u001b|2C LUGAR DE EXPEDICION \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA DOMICILIO   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA MAZATLAN, SINALOA   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA TEL #############   \n");
+				// JavaPOS's code for Step5
+				//Make 2mm speces
+				//   ESC|#uF = Line Feed
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|200uF");
+				// JavaPOS's code for Step5--END
+
+				//Print date
+				String charList[] = (ptr.getRecLineCharsList()).split(",");
+				int iRecLineCharsCount = charList.length;
+				if (iRecLineCharsCount >= 2) {
+					ptr.setRecLineChars(Integer.parseInt(charList[1]));
+					//   ESC|cA = Centaring char
+					ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA" + time + "\n");
+					ptr.setRecLineChars(Integer.parseInt(charList[0]));
+				}
+				else {
+					//   ESC|cA = Centaring char
+					ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA" + time + "\n");
+				}
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA================================================  \n");
+				// JavaPOS's code for Step5
+				//Make 5mm speces
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|300uF");
+
+				//Print buying go
+				String printData = "";
+				for (int i = 0; i < item.length; i++){
+					printData = makePrintString(ptr.getRecLineChars(),cant[i]+" "+item[i], "$" + subtot[i]);
+					ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, printData + "\n");
+				}
+
+				//Make 2mm speces
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|200uF");
+
+				//Print the total cost
+
+				printData = makePrintString(ptr.getRecLineChars(), "IVA",
+						formatForDouble(0.0));
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|uC" + printData + "\n");
+                                
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|200uF");
+                                
+				printData = makePrintString((ptr.getRecLineChars() / 2), "Total",
+						formatForDouble(tot));
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|bC\u001b|2C" + printData + "\n");
+
+				//Make 5mm speces
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|250uF");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA================================================  \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|250uF");
+				//Barcode printing
+				//Print from left side after 1cm spece.
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA\u001b|2C ESTE NO ES UN \n COMPROBANTE FISCAL \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA REDES SOCIALES:   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA FACEBOOK   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|cA INSTAGRAM   \n");
+                                ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|300uF");
+				// JavaPOS's code for Step5--END
+
+				//Feed the receipt to the cutter position automatically, and cut.
+				//   ESC|#fP = Line Feed and Paper cut
+				ptr.printNormal(POSPrinterConst.PTR_S_RECEIPT, "\u001b|fP");
+
+				// JavaPOS's code for Step6
+				//print all the buffer data. and exit the batch processing mode.
+				ptr.transactionPrint(POSPrinterConst.PTR_S_RECEIPT, POSPrinterConst.PTR_TP_NORMAL);
+				// JavaPOS's code for Step6--END
+                                
+                                ptr.close();
+			}
+		}
+		catch(JposException ex){
+		}
+    }
+    
+    public String makePrintString(int lineChars,String text1,String text2){
+		int spaces = 0;
+		String tab = "";
+		try{
+			spaces = lineChars - (text1.length() + text2.length());
+			for (int j = 0 ; j < spaces ; j++){
+				tab += " ";
+			}
+		}
+		catch(Exception ex){
+		}
+		return text1 + tab + text2;
+	}
+    
+    public String formatForDouble(double contents){
+		String newFormNo = "";
+		try{
+			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+			nf.setMaximumFractionDigits(2);
+			nf.setMinimumFractionDigits(2);
+			newFormNo = nf.format(contents);
+		}
+		catch(Exception ex){
+		}
+		return newFormNo;
+	}
+
+    
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton btnBuscar;
     javax.swing.JButton btnEV;
+    javax.swing.JButton btnEXP;
+    javax.swing.JButton btnIMP;
     javax.swing.JButton btnMV;
     com.toedter.calendar.JDateChooser jFecha;
     javax.swing.JLabel jLabel1;

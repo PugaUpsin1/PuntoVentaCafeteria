@@ -2,6 +2,7 @@ package Vista.Inicio;
 
 import Vista.Venta.panelVentas;
 import Controlador.Usuarios;
+import Vista.Clientes.panelClientes;
 import Vista.Configuracion.Configuracion;
 import Vista.Gestion.panelGestion;
 import Vista.Inventario.panelInventario;
@@ -151,6 +152,11 @@ public class Index extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/revisar.png"))); // NOI18N
         jButton2.setText("Clientes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btnInvent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/granos-de-cafe.png"))); // NOI18N
         btnInvent.setText("  Inventario");
@@ -298,6 +304,16 @@ public class Index extends javax.swing.JFrame {
         pIndex.revalidate();
         pIndex.repaint();
     }//GEN-LAST:event_btnEstadisticasActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        panelClientes  panClien = new panelClientes();
+        panClien.setSize(1288, 570);
+        panClien.setLocation(0, 0);
+        pIndex.removeAll();
+        pIndex.add(panClien, BorderLayout.CENTER);
+        pIndex.revalidate();
+        pIndex.repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     public static void privilegios(Usuarios usr) {

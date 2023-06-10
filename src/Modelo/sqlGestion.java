@@ -47,5 +47,24 @@ public class sqlGestion extends conexion{
         }
         return rs;
     }
+    
+    public ResultSet ticket(int idVe){
+        Connection con;
+        con = Conectar();
+        Statement st;
+        ResultSet rs = null;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("""
+                                 SELECT v.total, vp.cantidad, p.nombre, p.precioVent  FROM ventas AS v 
+                                 INNER JOIN venta_prod AS vp ON v.idVent = vp.idVent 
+                                 INNER JOIN productos AS p ON vp.idProducto = p.idProducto WHERE v.idVent =
+                                 """ + idVe);
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return rs;
+    }
+
 }
     
